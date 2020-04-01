@@ -8,18 +8,18 @@ import { Provider } from "react-redux";
 import { store } from "./Redux";
 import "./App.css";
 
-import Login from "./Pages/Login";
 import Dashboard from "./Pages/Dashboard";
+import Login from "./Pages/Login";
 
 const App = () => {
-  
+
   return (
     <Provider store={store}>
       <Router>
-      <Switch>
-          <Route exact path="/" children={<Login />} />
-          <Route exact path="/dashboard" children={<Dashboard />} />
-      </Switch>
+        <Switch>
+          <Route exact path="/" children={<Dashboard />} />
+          <Route exact path="/login" children={<Login />} />
+        </Switch>
       </Router>
     </Provider>
   );

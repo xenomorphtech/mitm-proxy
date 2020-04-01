@@ -1,19 +1,19 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { makeStyles } from '@material-ui/core/styles';
-import { Snackbar, Grow, Backdrop, CircularProgress } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core/styles";
+import { Snackbar, Grow, Backdrop, CircularProgress } from "@material-ui/core";
 
-import NavBar from './NavBar';
-import { hideSnackbar } from '../Redux/Actions/Page';
+import NavBar from "./NavBar";
+import { hideSnackbar } from "../Redux/Actions/Page";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex'
+    display: "flex"
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
+    color: "#fff",
   }
 }));
 
@@ -22,7 +22,7 @@ const Layout = (props) => {
   const { role, title, snackbar, hideSnackbar, backdrop } = props;
 
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     hideSnackbar({ ...snackbar, open: false });

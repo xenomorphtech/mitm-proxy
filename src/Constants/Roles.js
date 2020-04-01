@@ -1,3 +1,6 @@
+import React from "react";
+import { Dashboard } from "@material-ui/icons";
+
 export const CREATE = "Add";
 export const UPDATE = "Edit";
 
@@ -7,7 +10,7 @@ export const LINKS = [
   {
     label: "Dashboard",
     href: "/dashboard",
-    icon: "Menu",
+    icon: <Dashboard />,
     roles: [USER],
     show: {
       header: false,

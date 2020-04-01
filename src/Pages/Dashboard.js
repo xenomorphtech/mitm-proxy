@@ -19,6 +19,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Layout from '../Components/Layout';
 import { data } from '../__Mocks__/Data/Hex';
+import { chunk } from 'lodash';
 
 const drawerWidth = 240;
 
@@ -40,12 +41,40 @@ const useStyles = makeStyles((theme) => ({
 export default function MiniDrawer() {
   const classes = useStyles();
 
+  const quantum = 4;
+  const offset = 16;
+
+  const packets = [1,2,3,4,5,6,7,8,9,0].map((v) => {
+    const len = parseInt((Math.random() * 100) / quantum) * quantum;
+    const str = data.hex.split(" ").slice(len, len + len);
+    return { 
+      len, 
+      str,
+      offset,
+      quantum
+    };
+  });
+
   return (
     <Layout title="Dashboard">
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph style={{ fontFamily: "fira code" }}>
-          {data.hex.toUpperCase()}
+        <Typography paragraph>
+          {packets.map((({len, str, offset, quantum}) => (
+            <>
+              Length: {len}
+              <Typography style={{ fontFamily: "fira code" }}>
+                {chunk(str, offset).map((v) => (
+                  <>
+                    {chunk(v, quantum).map((e) => (
+                      <>&nbsp; &nbsp; {e.join(" ").toUpperCase()}</>
+                    ))}
+                    <br />
+                  </>
+                ))}
+              </Typography>
+            </>
+          )))}
         </Typography>
       </main>
       </Layout>

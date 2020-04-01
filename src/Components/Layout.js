@@ -9,7 +9,7 @@ import { hideSnackbar } from '../Redux/Actions/Page';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    display: 'flex'
   },
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,

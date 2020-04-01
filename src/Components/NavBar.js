@@ -1,128 +1,144 @@
 import React from 'react';
+import clsx from 'clsx';
 import { withRouter } from 'react-router';
 import { get } from 'lodash';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import { Menu, AccountCircle, ChevronRight, ChevronLeft, MoveToInbox, Mail } from '@material-ui/icons';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider } from '@material-ui/core';
+
+import { LINKS, USER } from "../Constants/Roles";
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: 36,
   },
-  title: {
-    flexGrow: 1,
+  hide: {
+    display: 'none',
   },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
+    },
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  }
 }));
 
 const NavBar = (props) => {
   const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [drawer, setDrawer] = React.useState(false);
-  const open = Boolean(anchorEl);
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
 
-  const { role, title, history } = props;
-
-  const redirect = (href) => () => history.push(href);
-
-  const handleChange = event => {
-    setAuth(event.target.checked);
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
 
-  const handleMenu = event => {
-    setAnchorEl(event.currentTarget);
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const toggleDrawer = (open) => event => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-
-    setDrawer(open);
-  };
-
-  const sideList = (
-    <div
-      className={classes.list}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <List>
-        {[].map(({label, href, roles, icon}, index) => roles.includes(role) ? (
-          <ListItem onClick={redirect(href)} button key={label}>
-            {/* <ListItemIcon>{Icons[icon]}</ListItemIcon> */}
-            <ListItemText primary={label} />
-          </ListItem>
-        ): <></>)}
-      </List>
-    </div>
-  );
 
   return (
     <>
-      <Drawer open={drawer} onClose={toggleDrawer(false)}>
-        {sideList}
-      </Drawer>
-      <AppBar position="static">
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
         <Toolbar>
           <IconButton
-            edge="start"
-            className={classes.menuButton}
-            onClick={toggleDrawer(true)}
             color="inherit"
-            aria-label="menu"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, {
+              [classes.hide]: open,
+            })}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            {title}
+          <Typography variant="h6" noWrap>
+            {props.title}
           </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-              </Menu>
-            </div>
-          )}
         </Toolbar>
       </AppBar>
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
+          [classes.drawerOpen]: open,
+          [classes.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
+            [classes.drawerOpen]: open,
+            [classes.drawerClose]: !open,
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {['Network', 'Connections', 'Packets Viewer', 'Requests'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     </>
   );
 };

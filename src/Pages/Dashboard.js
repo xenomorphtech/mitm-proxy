@@ -9,7 +9,7 @@ import { chunk } from "lodash";
 import { USER } from "../Constants/Roles";
 import { Box, Grid } from "@material-ui/core";
 
-import { hex_to_ascii, ascii_to_hex, str_to_hex_chunks } from "../Utils/Conversion";
+import { ascii_to_hex, str_to_hex_chunks } from "../Utils/Conversion";
 
 import RecyclerView from "../Components/RecyclerView";
 
@@ -27,19 +27,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   }
 }));
-
-const styles = {
-  rowContainer: {
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100% !important',
-    width: '100% !important',
-    border: '0.5px solid black',
-  }
-}
 
 export default function MiniDrawer() {
   const classes = useStyles();
@@ -62,8 +49,6 @@ export default function MiniDrawer() {
       quantum
     };
   });
-
-  console.log(packets);
 
   const dataList = [...packets];
 

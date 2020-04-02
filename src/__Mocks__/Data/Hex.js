@@ -1,5 +1,4 @@
-const hex = `
-98 23 67 07 d0 3e 8d b7 12 22 0f d4 69 5d 62 d3 
+const hex = `98 23 67 07 d0 3e 8d b7 12 22 0f d4 69 5d 62 d3 
 99 94 6e af 75 b4 be 56 21 69 d7 bc 7a 1f 2e 5e 
 06 15 e7 eb e9 54 15 22 50 8c 3a 22 46 c8 28 eb 
 ac 48 32 9c a4 53 91 66 22 e6 6c 1d 08 aa 13 c4 
@@ -1025,4 +1024,6 @@ a8 7d e5 c5 3e 49 b1 51 49 33 c1 38 a1 56 aa 56
 7e 4c 20 50 6d b9 fa 18 96 3f 37 b5 25 bd 08 1a
 `;
 
-export const data = { hex };
+const ascii = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum";
+
+export const data = { hex, ascii };

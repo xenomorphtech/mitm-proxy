@@ -7,6 +7,11 @@ import Layout from "../Components/Layout";
 import { data } from "../__Mocks__/Data/Hex";
 import { chunk } from "lodash";
 import { USER } from "../Constants/Roles";
+import { Box, Grid } from "@material-ui/core";
+
+import { hex_to_ascii, ascii_to_hex, str_to_hex_chunks } from "../Utils/Conversion";
+
+import RecyclerView from "../Components/RecyclerView";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -20,8 +25,21 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-  },
+  }
 }));
+
+const styles = {
+  rowContainer: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100% !important',
+    width: '100% !important',
+    border: '0.5px solid black',
+  }
+}
 
 export default function MiniDrawer() {
   const classes = useStyles();
@@ -29,9 +47,14 @@ export default function MiniDrawer() {
   const quantum = 4;
   const offset = 16;
 
-  const packets = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((v) => {
+  const hexStr = ascii_to_hex(data.ascii) || data.hex.replace(/ /g, "");
+
+  const packets = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
+    .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
+    .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat().map((v) => {
     const len = parseInt((Math.random() * 100) / quantum) * quantum;
-    const str = data.hex.split(" ").slice(len, len + len);
+    const str = str_to_hex_chunks(hexStr.slice(len, len + len));
     return {
       len,
       str,
@@ -40,28 +63,37 @@ export default function MiniDrawer() {
     };
   });
 
+  console.log(packets);
+
+  const dataList = [...packets];
+
+  const view = ({ len, str, quantum, offset}) => (
+    <Grid item xs={12} sm={8} md={8} lg={8}>
+      Length: {len}
+      <Typography style={{ fontFamily: "fira code" }}>
+        {chunk(str, offset).map((v) => (
+          <>
+            {chunk(v, quantum).map((e) => (
+              <>&nbsp; &nbsp; {e.join(" ").toUpperCase()}</>
+            ))}
+            <br />
+          </>
+        ))}
+      </Typography>
+    </Grid>
+  );
+
   return (
     <Layout title="Dashboard" role={USER}>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          {packets.map((({ len, str, offset, quantum }) => (
-            <>
-              Length: {len}
-              <Typography style={{ fontFamily: "fira code" }}>
-                {chunk(str, offset).map((v) => (
-                  <>
-                    {chunk(v, quantum).map((e) => (
-                      <>&nbsp; &nbsp; {e.join(" ").toUpperCase()}</>
-                    ))}
-                    <br />
-                  </>
-                ))}
-              </Typography>
-            </>
-          )))}
-        </Typography>
+        <Box>
+          <RecyclerView
+            dataList={dataList}
+            view={view}
+          />
+        </Box>
       </main>
-    </Layout>
+    </Layout >
   );
 }

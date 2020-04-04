@@ -7,13 +7,14 @@
  */
 
 
+const _ = require("lodash");
 
 /**
  * Takes a ASCII string and returns a HEX string.
  * @param {String} str ASCII string
  * @return {String} HEX String
  */
-const ascii_to_hex = (str) => {
+const asciiToHex = (str) => {
   const arr = [];
   let i = 0, len = str.length;
   while (i < len) {
@@ -30,7 +31,7 @@ const ascii_to_hex = (str) => {
  * @param {String} str HEX string
  * @return {String} ASCII String
  */
-const hex_to_ascii = (hex) => {
+const hexToAscii = (hex) => {
   hex = hex.toString();
   let i = 0, str = '', len = hex.length;
   while (i < len) {
@@ -40,10 +41,65 @@ const hex_to_ascii = (hex) => {
   return str;
 };
 
-const str_to_hex_chunks = (str) => str.match(/.{1,2}/g);
+const strToHexChunks = (str) => str.match(/.{1,2}/g);
+
+
+/**
+ * Takes a HEX string and returns equivalent Integer.
+ * @param {String} str HEX string
+ * @return {Int} Integer
+ */
+const hexToDecimal = (str) => parseInt(str, 16);
+
+
+
+/**
+ * Takes an Integer and returns equivalent HEX string.
+ * @param {Int} num Integer
+ * @return {String} Hex string
+ */
+const decimalToHex = (num) => Number(num).toString(16);
+
+
+
+/**
+ * Takes a HEX string and returns equivalent Binary string.
+ * @param {String} str HEX string
+ * @return {Int} Binary string
+ */
+const hexToBinary = (str) => parseInt(str, 16).toString(2);
+
+
+
+/**
+ * Takes an Integer and returns equivalent HEX string.
+ * @param {Int} num Binary string
+ * @return {String} Hex string
+ */
+const binaryToHex = (num) => parseInt(num,2).toString(16);
+
+
+const binArrToBinStr = (arr) => arr.map(v => v ? 1 : 0).join("");
+
+const binStrToBinArr = (str) => str.split("").map(v => v === "1" ? 1 : 0);
+
+const makeValidBinStr = (str) => "0".repeat(8 - str.length) + str;
+
+const hexToBinArr = (h) => _.flow([hexToBinary, makeValidBinStr, binStrToBinArr])(h);
+
+const binArrToHex = (arr) => _.flow([binArrToBinStr, binaryToHex])(arr).toUpperCase();
+
 
 module.exports = {
-  ascii_to_hex,
-  hex_to_ascii,
-  str_to_hex_chunks
+  asciiToHex,
+  hexToAscii,
+  strToHexChunks,
+  hexToDecimal,
+  decimalToHex,
+  hexToBinary,
+  binaryToHex,
+  binArrToBinStr,
+  binStrToBinArr,
+  hexToBinArr,
+  binArrToHex
 };

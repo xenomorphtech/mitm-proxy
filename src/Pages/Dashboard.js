@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { flow } from "lodash";
 
 import Layout from "../Components/Layout";
 import { data } from "../__Mocks__/Data/Hex";
 import { USER } from "../Constants/Roles";
 import { Box } from "@material-ui/core";
 
-import { ascii_to_hex, str_to_hex_chunks } from "../Utils/Conversion";
+import C from "../Utils/Conversion";
 
 import RecyclerView from "../Components/RecyclerView";
 import HexViewer from "../Components/HexEditor/HexViewer";
+import BinaryView from "../Components/HexEditor/BinaryView";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -29,17 +31,19 @@ const useStyles = makeStyles((theme) => ({
 const Dashboard = (props) => {
   const classes = useStyles();
 
+  const [ hexCode, setHexCode ] = useState("FF");
+
   const quantum = 4;
   const offset = 16;
 
-  const hexStr = ascii_to_hex(data.ascii) || data.hex.replace(/ /g, "");
+  const hexStr = C.asciiToHex(data.ascii) || data.hex.replace(/ /g, "");
 
   const packets = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
     .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
     .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
     .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat().map((v) => {
     const len = parseInt((Math.random() * 100) / quantum) * quantum;
-    const str = str_to_hex_chunks(hexStr.slice(len, len + len));
+    const str = C.strToHexChunks(hexStr.slice(len, len + len));
     return {
       len,
       str,
@@ -47,6 +51,8 @@ const Dashboard = (props) => {
       quantum
     };
   });
+
+  // setBinValues( flow([C.hexToBinary, C.binStrToBinArr])(hexCode) );
 
   const dataList = [...packets];
 
@@ -57,6 +63,13 @@ const Dashboard = (props) => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Box>
+          <BinaryView 
+            hexCode={hexCode}
+            setHexCode={setHexCode}
+            // values={binValues}
+            // setValues={setValues}
+          />
+          {hexCode}
           <RecyclerView
             dataList={dataList}
             view={view}

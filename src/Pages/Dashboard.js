@@ -3,11 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Layout from "../Components/Layout";
 import { data } from "../__Mocks__/Data/Hex";
 import { USER } from "../Constants/Roles";
-import { Box, Typography } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 import C from "../Utils/Conversion";
 
-import RecyclerView from "../Components/RecyclerView";
 import HexViewer from "../Components/HexEditor/HexViewer";
 import BinaryView from "../Components/HexEditor/BinaryView";
 import { connect } from "react-redux";

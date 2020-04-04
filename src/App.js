@@ -4,20 +4,24 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-// import { Provider } from "react-redux";
-// import { store } from "./Redux";
+import { Provider } from "react-redux";
+import { store } from "./Redux";
 import "./App.css";
 
+import Dashboard from "./Pages/Dashboard";
+import Login from "./Pages/Login";
+
 const App = () => {
-  
+
   return (
-    // <Provider store={store}>
+    <Provider store={store}>
       <Router>
-      <Switch>
-          <Route exact path="/" children={<>Hi</>} />
-      </Switch>
+        <Switch>
+          <Route exact path="/" children={<Dashboard />} />
+          <Route exact path="/login" children={<Login />} />
+        </Switch>
       </Router>
-    // </Provider>
+    </Provider>
   );
 }
 

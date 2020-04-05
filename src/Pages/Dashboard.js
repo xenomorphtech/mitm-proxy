@@ -3,13 +3,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import Layout from "../Components/Layout";
 import { data } from "../__Mocks__/Data/Hex";
 import { USER } from "../Constants/Roles";
-import { Box } from "@material-ui/core";
+import { Box, Grid, TextField } from "@material-ui/core";
 
 import C from "../Utils/Conversion";
 
 import HexViewer from "../Components/HexEditor/HexViewer";
-import BinaryView from "../Components/HexEditor/BinaryView";
+// import BinaryView from "../Components/HexEditor/BinaryView";
 import { connect } from "react-redux";
+import DataInspector from "../Components/Panels/DataInspector";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    marginTop: theme.spacing(1),
+    padding: theme.spacing(1),
   }
 }));
 
@@ -60,16 +62,22 @@ const Dashboard = (props) => {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Box>
-          <BinaryView
-            hexCode={hexCode}
-            setHexCode={setHexCode}
-          />
-          <span style={{ fontFamily: "Source Code Pro", fontSize: "1rem" }}>
-            &nbsp; : &nbsp;{hexCode.toUpperCase()}
-          </span>
-          <br />
-          <br />
-          <HexViewer {...dataList[0]} />
+          <Grid
+            container
+            direction="row"
+            spacing={1}
+          >
+            <Grid item xs={12} sm={6} md={4} lg={4}>
+              <DataInspector
+                hexCode={hexCode}
+                setHexCode={setHexCode}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6} md={8} lg={8}>
+              <HexViewer {...dataList[0]} />
+            </Grid>
+          </Grid>
+
           {/* <RecyclerView
             dataList={dataList}
             view={view}

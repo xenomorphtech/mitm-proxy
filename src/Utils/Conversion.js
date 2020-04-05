@@ -83,11 +83,13 @@ const binArrToBinStr = (arr) => arr.map(v => v ? 1 : 0).join("");
 
 const binStrToBinArr = (str) => str.split("").map(v => v === "1" ? 1 : 0);
 
-const makeValidBinStr = (str) => "0".repeat(8 - str.length) + str;
+const makeNiceBinStr = (str) => "0".repeat(8 - str.length) + str;
 
-const hexToBinArr = (h) => _.flow([hexToBinary, makeValidBinStr, binStrToBinArr])(h);
+const makeNiceHexStr = (str) => str.length === 1 ? "0"+str : str;
 
-const binArrToHex = (arr) => _.flow([binArrToBinStr, binaryToHex])(arr).toUpperCase();
+const hexToBinArr = (h) => _.flow([hexToBinary, makeNiceBinStr, binStrToBinArr])(h);
+
+const binArrToHex = (arr) => _.flow([binArrToBinStr, binaryToHex, makeNiceHexStr])(arr).toUpperCase();
 
 
 module.exports = {

@@ -9,6 +9,7 @@ import { Box, Grid, TextField, Paper } from "@material-ui/core";
 import C from "../Utils/Conversion";
 
 import { connect } from "react-redux";
+import PacketView from "../Components/PacketsViewer/PacketView";
 import DataInspectorPanel from "../Components/Panels/DataInspectorPanel";
 import ConnectionsPanel from "../Components/Panels/ConnectionsPanel";
 

@@ -3,7 +3,7 @@ import Panel from "../Panel";
 import { TextField, Box } from "@material-ui/core";
 import BinaryView from "../HexEditor/BinaryView";
 
-const DataInspector = (props) => {
+const DataInspectorPanel = (props) => {
   const { hexCode, setHexCode } = props;
 
   const handleChange = (name) => ({ target: {value}}) => {
@@ -39,4 +39,4 @@ const DataInspector = (props) => {
   );
 };
 
-export default DataInspector;
+export default DataInspectorPanel;

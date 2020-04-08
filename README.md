@@ -23,3 +23,10 @@ NOTE : Please make sure you have yarn - [Installing yarn](https://yarnpkg.com/en
       ```bash
       $ yarn dev
       ```
+
+## Deployment Guide
+NOTE : Hosted using [Zeit](https://zeit.co), Continuous Deployment using it.
+
+  * features -> https://dev-netmarble.now.sh
+  * development -> https://stage-netmarble.now.sh
+  * master -> https://netmarble.now.sh

@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Layout from "../Components/Layout";
 import { data } from "../__Mocks__/Data/Hex";
+import { connections } from "../__Mocks__/Data/Connection";
 import { USER } from "../Constants/Roles";
 import { Box, Grid, TextField, Paper } from "@material-ui/core";
 
 import C from "../Utils/Conversion";
 
 import { connect } from "react-redux";
-import DataInspector from "../Components/Panels/DataInspector";
-import PacketView from "../Components/PacketsViewer/PacketView";
+import DataInspectorPanel from "../Components/Panels/DataInspectorPanel";
+import ConnectionsPanel from "../Components/Panels/ConnectionsPanel";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -66,7 +67,10 @@ const Dashboard = (props) => {
             spacing={1}
           >
             <Grid item xs={12} sm={6} md={4} lg={4}>
-              <DataInspector
+              <ConnectionsPanel
+                connections={connections}
+              />
+              <DataInspectorPanel
                 hexCode={hexCode}
                 setHexCode={setHexCode}
               />

@@ -10,3 +10,7 @@ body {
 .mdl-data-table td {
   cursor: pointer;
 }
+
+.font-source-code-pro {
+  font-family: "Source Code Pro";
+}

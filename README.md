@@ -1,29 +1,32 @@
-![React Logo](https://github.com/zeit/now/blob/master/packages/frameworks/logos/react.svg)
+# MITM PROXY
 
-# React Example
+An Network Analysis with Hex Viewer and Editor
 
-This directory is a brief example of a [React](https://reactjs.org/) app with [Serverless Functions](https://zeit.co/docs/v2/serverless-functions/introduction) that can be deployed with ZEIT Now and zero configuration.
+## Links
 
-## Deploy Your Own
+* Production : https://netmarble.now.sh
+* Staging : https://stage-netmarble.now.sh
+* Development : https://dev-netmarble.now.sh
 
-Deploy your own React project, along with Serverless Functions, with ZEIT Now.
+## Development Guide
+NOTE : Please make sure you have yarn - [Installing yarn](https://yarnpkg.com/en/docs/install)
 
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/zeit/now/tree/master/examples/create-react-app-functions)
+  1) Clone Repo
+      ```bash
+      $ git clone https://github.com/iarthstar/mitm-proxy
+      ```
+  2) Installing dependencies
+      ```bash
+      $ yarn install
+      ```
+  3) To watch for changes
+      ```bash
+      $ yarn dev
+      ```
 
-_Live Example: https://create-react-app.now-examples.now.sh/_
+## Deployment Guide
+NOTE : Hosted using [Zeit](https://zeit.co), Continuous Deployment using it.
 
-### How We Created This Example
-
-To get started with React, along with [Serverless Functions](https://zeit.co/docs/v2/serverless-functions/introduction), with ZEIT Now, you can use the [Create-React-App CLI](https://reactjs.org/docs/create-a-new-react-app.html#create-react-app) to initialize the project:
-
-```shell
-$ npx create-react-app my-app
-```
-
-### Deploying From Your Terminal
-
-You can deploy your new React project, along with [Serverless Functions](https://zeit.co/docs/v2/serverless-functions/introduction), with a single command from your terminal using [Now CLI](https://zeit.co/download):
-
-```shell
-$ now
-```
+  * features -> https://dev-netmarble.now.sh
+  * development -> https://stage-netmarble.now.sh
+  * master -> https://netmarble.now.sh

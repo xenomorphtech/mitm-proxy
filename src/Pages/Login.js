@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import { isEmpty } from "lodash";
+import { connect } from "react-redux";
 
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import { Typography, Box, TextField, Button } from '@material-ui/core';
-import { connect } from 'react-redux';
-// import { authenticate } from '../Redux/Actions/User';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import { Typography, Box, TextField, Button } from "@material-ui/core";
+
+import { signIn } from "../Redux/Actions/Auth";
 
 const initForm = {
   username: {
@@ -31,7 +32,8 @@ const initForm = {
 const Login = (props) => {
   const {
     history,
-    user
+    user,
+    signIn
   } = props;
 
   //
@@ -75,17 +77,18 @@ const Login = (props) => {
 
   useEffect(() => {
     if (!isEmpty(user)) {
-      history.push("/dashboard");
+      // history.push("/");
     }
   }, [user]);
 
   const onClickLogin = () => {
-    if (validateForm()) {
-      console.log("GO TO DASHBOARD");
-      // Todo : Login API
-      // authenticate(values);
-      history.push("/dashboard");
-    }
+    // if (validateForm()) {
+    console.log("GO TO DASHBOARD");
+    // Todo : Login API
+    // authenticate(values);
+    signIn();
+    // history.push("/");
+    // }
   };
 
   const loginBtnDisabled = !Object.values(form).every(e => !isEmpty(e.value) || e.error === false);
@@ -146,9 +149,9 @@ const Login = (props) => {
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps, {
-  // authenticate
+  signIn
 })(withRouter(Login));

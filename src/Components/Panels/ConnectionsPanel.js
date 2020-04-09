@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Panel from "../Panel";
-import { TextField, Box, FormControlLabel, Switch, FormGroup } from "@material-ui/core";
+import { Box, FormControlLabel, Switch } from "@material-ui/core";
 
 const ConnectionsPanel = (props) => {
   const [connections, setConnections] = useState(props.connections || []);
@@ -8,7 +8,7 @@ const ConnectionsPanel = (props) => {
   const handleChange = (name) => ({ target: { checked } }) => {
     const updatedConnections = [...connections];
     updatedConnections.forEach((connection, i) => {
-      if ("connection-"+i === name) {
+      if ("connection-" + i === name) {
         connection.connected = checked;
       }
     });
@@ -24,7 +24,7 @@ const ConnectionsPanel = (props) => {
               control={
                 <Switch
                   checked={connected}
-                  onChange={handleChange("connection-"+i)}
+                  onChange={handleChange("connection-" + i)}
                   name={"connection-" + i}
                   color="primary"
                 />

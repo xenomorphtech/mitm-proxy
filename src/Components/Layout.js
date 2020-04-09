@@ -7,6 +7,8 @@ import { Snackbar, Grow, Backdrop, CircularProgress } from "@material-ui/core";
 import NavBar from "./NavBar";
 import { hideSnackbar } from "../Redux/Actions/Page";
 
+import "typeface-source-code-pro";
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
@@ -37,7 +39,7 @@ const Layout = (props) => {
         message={snackbar.msg}
         TransitionComponent={(props) => <Grow {...props} />}
       />}
-      {backdrop && <Backdrop className={classes.backdrop} open={backdrop.count > 0 ? true : false}>
+      {backdrop.count && <Backdrop className={classes.backdrop} open={Boolean(backdrop.count)}>
         <CircularProgress color="inherit" />
       </Backdrop>}
       <NavBar role={role} title={title} />

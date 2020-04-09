@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-
+import { signIn } from "../../Redux/Actions/Auth";
 import { setHexCode } from "../../Redux/Actions/HexCode";
 
 const useStyles = makeStyles(theme => ({
@@ -38,5 +38,6 @@ const SingleHex = (props) => {
 const mapStateToProps = st => ({});
 
 export default connect(mapStateToProps, {
-  setHexCode
+  setHexCode,
+  signIn
 })(SingleHex);

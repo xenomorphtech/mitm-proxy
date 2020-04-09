@@ -1,29 +1,23 @@
-import {
-  SHOW_SNACKBAR,
-  HIDE_SNACKBAR,
-  SHOW_BACKDROP,
-  HIDE_BACKDROP
-} from "../Types/Page";
+import TYPE from "../Types/Page";
 
 const initialState = {
   snackbar: undefined,
   backdrop: { count: 0 }
 };
 
-export default (state = initialState, action) => {
-  const { type, payload } = action;
+export default (state = initialState, { type, payload }) => {
   switch (type) {
 
-    case SHOW_SNACKBAR:
+    case TYPE.SHOW_SNACKBAR:
       return { ...state, snackbar: payload };
 
-    case HIDE_SNACKBAR:
+    case TYPE.HIDE_SNACKBAR:
       return { ...state, backdrop: payload };
 
-    case SHOW_BACKDROP:
+    case TYPE.SHOW_BACKDROP:
       return { ...state, backdrop: payload };
 
-    case HIDE_BACKDROP:
+    case TYPE.HIDE_BACKDROP:
       return { ...state, backdrop: payload };
 
     default:

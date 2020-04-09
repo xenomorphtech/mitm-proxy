@@ -1,10 +1,10 @@
 import React from "react";
+import PropTypes from 'prop-types';
+
+import { makeStyles } from "@material-ui/core/styles";
+import { Checkbox, Tooltip, FormControl, FormLabel, Box } from "@material-ui/core";
 
 import C from "../../Utils/Conversion";
-
-import PropTypes from 'prop-types';
-import { Checkbox, Tooltip, FormControl, FormLabel, Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   boxInForm: {
@@ -47,6 +47,6 @@ const BinaryView = (props) => {
 BinaryView.propTypes = {
   hexCode: PropTypes.string,
   sethexCode: PropTypes.func
-}
+};
 
 export default BinaryView;

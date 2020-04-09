@@ -4,7 +4,7 @@ import Layout from "../Components/Layout";
 import { data } from "../__Mocks__/Data/Hex";
 import { connections } from "../__Mocks__/Data/Connection";
 import { USER } from "../Constants/Roles";
-import { Box, Grid, TextField } from "@material-ui/core";
+import { Box, Grid } from "@material-ui/core";
 
 import C from "../Utils/Conversion";
 
@@ -53,8 +53,6 @@ const Dashboard = (props) => {
 
   const dataList = [...packets];
 
-  // const view = (props) => <HexViewer {...props} />;
-
   useEffect(() => {
     setHexCode(selectedHexCode);
   }, [selectedHexCode]);
@@ -82,11 +80,6 @@ const Dashboard = (props) => {
               <HexViewer {...dataList[0]} />
             </Grid>
           </Grid>
-
-          {/* <RecyclerView
-            dataList={dataList}
-            view={view}
-          /> */}
         </Box>
       </main>
     </Layout >

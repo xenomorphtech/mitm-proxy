@@ -83,11 +83,11 @@ const Login = (props) => {
 
   const onClickLogin = () => {
     // if (validateForm()) {
-      console.log("GO TO DASHBOARD");
-      // Todo : Login API
-      // authenticate(values);
-      signIn();
-      // history.push("/");
+    console.log("GO TO DASHBOARD");
+    // Todo : Login API
+    // authenticate(values);
+    signIn();
+    // history.push("/");
     // }
   };
 

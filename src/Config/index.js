@@ -20,8 +20,7 @@ const Environments = {
 };
 
 const BASE_URL = {
-  // [LOCALHOST]   : "http://localhost:8080",
-  [LOCALHOST]   : "https://reqres.in",
+  [LOCALHOST]   : "http://localhost:8080",
   [DEVELOPMENT] : "https://dev-netmarble.herokuapp.com",
   [STAGING]     : "https://stage-netmarble.herokuapp.com",
   [PRODUCTION]  : "https://netmarble.herokuapp.com"

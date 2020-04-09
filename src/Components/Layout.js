@@ -8,6 +8,7 @@ import NavBar from "./NavBar";
 import { hideSnackbar } from "../Redux/Actions/Page";
 
 import "typeface-source-code-pro";
+import 'typeface-roboto';
 
 const useStyles = makeStyles(theme => ({
   root: {

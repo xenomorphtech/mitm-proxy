@@ -6,10 +6,10 @@ import BinaryView from "../HexEditor/BinaryView";
 const DataInspectorPanel = (props) => {
   const { hexCode, setHexCode } = props;
 
-  const handleChange = (name) => ({ target: {value}}) => {
-    switch(name) {
+  const handleChange = (name) => ({ target: { value } }) => {
+    switch (name) {
       case "hexCodeValue": setHexCode(value); break;
-      default: {}
+      default: { }
     }
   };
 
@@ -17,9 +17,9 @@ const DataInspectorPanel = (props) => {
     <Panel heading="Data Inspector">
       <Box className="w-100">
         <TextField
-          inputProps={{ 
-            maxLength: 2, 
-            style: { fontFamily: "Source Code Pro" } 
+          inputProps={{
+            maxLength: 2,
+            style: { fontFamily: "Source Code Pro" }
           }}
           id="outlined-basic"
           label="Value"

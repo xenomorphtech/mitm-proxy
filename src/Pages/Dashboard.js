@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Layout from "../Components/Layout";
-import { data } from "../__Mocks__/Data/Hex";
-import { connections } from "../__Mocks__/Data/Connection";
-import { USER } from "../Constants/Roles";
-import { Box, Grid, TextField, Paper } from "@material-ui/core";
-
-import C from "../Utils/Conversion";
-
 import { connect } from "react-redux";
+
+import { makeStyles } from "@material-ui/core/styles";
+import { data } from "../__Mocks__/Data/Hex";
+import { Box, Grid, Paper } from "@material-ui/core";
+
+import Layout from "../Components/Layout";
 import PacketView from "../Components/PacketsViewer/PacketView";
 import DataInspectorPanel from "../Components/Panels/DataInspectorPanel";
 import ConnectionsPanel from "../Components/Panels/ConnectionsPanel";
+
+import { USER } from "../Constants/Roles";
+import { connections } from "../__Mocks__/Data/Connection";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {

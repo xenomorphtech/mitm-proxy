@@ -1,6 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+
+import { makeStyles } from "@material-ui/core/styles";
 
 import { setHexCode } from "../../Redux/Actions/HexCode";
 

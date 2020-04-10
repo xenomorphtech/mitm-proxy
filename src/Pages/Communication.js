@@ -55,7 +55,7 @@ const Communication = (props) => {
   }, [selectedHexCode]);
 
   return (
-    <Layout title="Dashboard" role={USER}>
+    <Layout title="Communication" role={USER}>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Box>

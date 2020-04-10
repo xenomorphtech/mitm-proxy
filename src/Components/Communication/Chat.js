@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-import Hue from "@material-ui/core/colors";
+import { Paper, Box } from "@material-ui/core";
+
 import Message from "./Message";
 
-
 const Chat = (props) => {
+  const paperRef = useRef(null);
 
   const messageView = (data) => {
     const { username, content, userDetails, sentAt } = data;
@@ -18,11 +19,18 @@ const Chat = (props) => {
     );
   };
 
+  useEffect(() => {
+    paperRef.current.scrollIntoView({ behavior: 'smooth' });
+    paperRef.current.scrollTo(0, paperRef.current.scrollHeight);
+  },[]);
+
   const { isGroup, memberCount, messages, currentUser } = props;
   return (
-    <>
-      {messages.map(messageView)}
-    </>
+    <Paper ref={paperRef} style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
+      <Box p={2}>
+        {messages.map(messageView)}
+      </Box>
+    </Paper>
   );
 };
 

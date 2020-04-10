@@ -65,14 +65,10 @@ const Communication = (props) => {
             spacing={1}
           >
             <Grid item xs={12} sm={6} md={4} lg={4}>
-              <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
-                <Box p={2}>
-                  <Chat
-                    messages={M.messages}
-                    currentUser={{ id: 786 }}
-                  />
-                </Box>
-              </Paper>
+              <Chat
+                messages={M.messages}
+                currentUser={{ id: 786 }}
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={8} lg={8}>
               <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>

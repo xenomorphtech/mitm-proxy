@@ -11,6 +11,7 @@ import Chat from "../Components/Communication/Chat";
 
 import { USER } from "../Constants/Roles";
 import M from "../__Mocks__/Data/Communication";
+import Faker from "faker";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -67,7 +68,7 @@ const Communication = (props) => {
             <Grid item xs={12} sm={6} md={4} lg={4}>
               <Chat
                 messages={M.messages}
-                currentUser={{ id: 786 }}
+                currentUser={M.messages[Faker.random.number(9)].userDetails.username}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={8} lg={8}>

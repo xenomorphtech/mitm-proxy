@@ -4,25 +4,27 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Paper, Box, Typography } from "@material-ui/core";
 import { red, pink, purple, deepPurple, indigo, blue, lightBlue, cyan, teal, green, lightGreen, lime, yellow, amber, orange, deepOrange, brown, blueGrey } from "@material-ui/core/colors";
 
+const shade = "900";
+
 const getColor = (i) => ({
-  0: red["900"],
-  1: pink["900"],
-  2: purple["900"],
-  3: deepPurple["900"],
-  4: indigo["900"],
-  5: lightBlue["900"],
-  6: cyan["900"],
-  7: teal["900"],
-  8: green["900"],
-  9: lightGreen["900"],
-  10: lime["900"],
-  11: yellow["900"],
-  12: amber["900"],
-  13: orange["900"],
-  14: deepOrange["900"],
-  15: brown["900"],
-  16: blueGrey["900"]
-}[i])
+  0: red[shade],
+  1: pink[shade],
+  2: purple[shade],
+  3: deepPurple[shade],
+  4: indigo[shade],
+  5: lightBlue[shade],
+  6: cyan[shade],
+  7: teal[shade],
+  8: green[shade],
+  9: lightGreen[shade],
+  10: lime[shade],
+  11: yellow[shade],
+  12: amber[shade],
+  13: orange[shade],
+  14: deepOrange[shade],
+  15: brown[shade],
+  16: blueGrey[shade]
+}[i]);
 
 const useStyles = makeStyles((theme) => ({
   leftSide: {
@@ -49,19 +51,17 @@ const useStyles = makeStyles((theme) => ({
 const Message = (props) => {
   const classes = useStyles();
 
-  console.log(props);
-
-  const { mine, content, username, contentDetails } = props;
+  const { mine, userDetails, contentDetails } = props;
 
   return (
     <div className={mine ? classes.rightSide : classes.leftSide}>
       <Paper style={{ background: mine ? blue[900]: getColor(parseInt(Math.random() * 100) % 16)}}>
         <Box p={1}>
           <Typography variant="caption">
-            {username}
+            {userDetails.username}
           </Typography>
           <Typography variant="body2">
-            {content}
+            {contentDetails.content}
           </Typography>
           <p className={classes.timeStamp}>
             {contentDetails.sentAt}

@@ -77,7 +77,7 @@ const Dashboard = (props) => {
               />
             </Grid>
             <Grid item xs={12} sm={6} md={8} lg={8}>
-              <Paper style={{ height: 'calc(100vh - 84px)', overflow: "scroll" }}>
+              <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
                 <Box p={2}>
                   {packets.map(({ str }) => <PacketView hexStr={str} />)}
                 </Box>

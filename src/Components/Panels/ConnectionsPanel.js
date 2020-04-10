@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import Faker from "faker";
+
+import { Box, FormControlLabel, Switch, Typography } from "@material-ui/core";
+
 import Panel from "../Panel";
-import { Box, FormControlLabel, Switch } from "@material-ui/core";
+import ConnectionsTable from "../Tables/ConnectionsTable";
 
 const ConnectionsPanel = (props) => {
   const [connections, setConnections] = useState(props.connections || []);
 
-  const handleChange = (name) => ({ target: { checked } }) => {
+  const onToggle = (name) => ({ target: { checked } }) => {
     const updatedConnections = [...connections];
     updatedConnections.forEach((connection, i) => {
       if ("connection-" + i === name) {
@@ -18,22 +22,10 @@ const ConnectionsPanel = (props) => {
   return (
     <Panel heading="Connections">
       <Box className="w-100">
-        {connections.map(({ connected, name }, i) => (
-          <>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={connected}
-                  onChange={handleChange("connection-" + i)}
-                  name={"connection-" + i}
-                  color="primary"
-                />
-              }
-              label={name}
-            />
-            <br />
-          </>
-        ))}
+        <ConnectionsTable
+          list={connections}
+          onToggle={onToggle}
+        />
       </Box>
     </Panel>
   );

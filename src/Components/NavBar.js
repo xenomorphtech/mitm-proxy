@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -70,6 +70,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NavBar = (props) => {
+  const { history } = props;
   const { title, role } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -85,7 +86,7 @@ const NavBar = (props) => {
 
   const sideList = (
     LINKS.filter(({ roles }) => roles.includes(role)).map(({ label, href, icon }) => (
-      <ListItem button key={href}>
+      <ListItem button key={href} onClick={() => history.push(href)}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={label} />
       </ListItem>

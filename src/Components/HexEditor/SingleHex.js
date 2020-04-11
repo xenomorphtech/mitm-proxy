@@ -10,8 +10,9 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center",
     cursor: "pointer",
     padding: "0px 4px 0px 4px",
+    transition: "background 0.150s ease-out",
     "&:hover": {
-      background: "#F5005755"
+      background: theme.palette.type === "dark" ? "#FFFFFF50" : "#00000050"
     }
   }
 }));

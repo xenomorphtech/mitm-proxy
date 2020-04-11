@@ -12,7 +12,7 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, snackbar: payload };
 
     case TYPE.HIDE_SNACKBAR:
-      return { ...state, backdrop: payload };
+      return { ...state, snackbar: payload };
 
     case TYPE.SHOW_BACKDROP:
       return { ...state, backdrop: payload };

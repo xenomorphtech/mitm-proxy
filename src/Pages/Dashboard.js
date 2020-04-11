@@ -51,14 +51,12 @@ const Dashboard = (props) => {
 
   const [hexCode, setHexCode] = useState(selectedHexCode);
 
-  const dataList = [...packets];
-
   useEffect(() => {
     setHexCode(selectedHexCode);
   }, [selectedHexCode]);
 
   return (
-    <Layout title="Dashboard" role={USER}>
+    <Layout title="Dashboard" role={USER} user={{}}>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Box>

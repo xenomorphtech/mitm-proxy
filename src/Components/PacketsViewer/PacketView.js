@@ -12,8 +12,6 @@ const PacketView = (props) => {
   const { hexStr } = props;
   const lines = hexStr.match(/.{1,32}/g);
 
-  console.log(hexStr, lines);
-
   const makeAddressStr = (i) => "0x" + "0".repeat(8 - String(i * 10).length) + i * 10;
   return (
     <Grid className="font-source-code-pro" container direction="row">

@@ -3,12 +3,14 @@ import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { data } from "../__Mocks__/Data/Hex";
-import { Box, Grid, Paper } from "@material-ui/core";
+import { Box, Grid, Paper, Typography } from "@material-ui/core";
 
 import Layout from "../Components/Layout";
 import PacketView from "../Components/PacketsViewer/PacketView";
 import DataInspectorPanel from "../Components/Panels/DataInspectorPanel";
 import ConnectionsPanel from "../Components/Panels/ConnectionsPanel";
+
+import PacketsTable from "../Components/Tables/PacketsTable";
 
 import { USER } from "../Constants/Roles";
 import { connections } from "../__Mocks__/Data/Connection";
@@ -51,8 +53,6 @@ const Dashboard = (props) => {
 
   const [hexCode, setHexCode] = useState(selectedHexCode);
 
-  const dataList = [...packets];
-
   useEffect(() => {
     setHexCode(selectedHexCode);
   }, [selectedHexCode]);
@@ -79,7 +79,14 @@ const Dashboard = (props) => {
             <Grid item xs={12} sm={6} md={8} lg={8}>
               <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
                 <Box p={2}>
-                  {packets.map(({ str }) => <PacketView hexStr={str} />)}
+                  {/* {packets.map(({ str }) => <PacketView hexStr={str} />)} */}
+                  {packets.map(({ len, str }) => <>
+                    <Typography variant="caption">Packet size : {len}</Typography>
+                    <PacketsTable list={str.match(/.{1,32}/g)} />
+                    <br />
+                    <br />
+                  </>)}
+
                 </Box>
               </Paper>
             </Grid>

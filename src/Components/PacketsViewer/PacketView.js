@@ -10,9 +10,11 @@ import ChunkHex from "../HexEditor/ChunkHex";
 
 const PacketView = (props) => {
   const { hexStr } = props;
+  
   const lines = hexStr.match(/.{1,32}/g);
 
   const makeAddressStr = (i) => "0x" + "0".repeat(8 - String(i * 10).length) + i * 10;
+
   return (
     <Grid className="font-source-code-pro" container direction="row">
       <Grid item xs={12} sm={12} md={12} lg={12}>Length : {hexStr.length}</Grid>

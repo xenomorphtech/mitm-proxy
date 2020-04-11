@@ -11,22 +11,25 @@ const DEVELOPMENT   = "development";
 const LOCALHOST     = "localhost";
 const STAGING       = "staging";
 const PRODUCTION    = "production";
+const REQRES        = "reqres";
 
 const Environments = {
   [LOCALHOST]   : LOCALHOST,
   [DEVELOPMENT] : DEVELOPMENT,
   [STAGING]     : STAGING,
-  [PRODUCTION]  : PRODUCTION
+  [PRODUCTION]  : PRODUCTION,
+  [REQRES]      : REQRES,
 };
 
 const BASE_URL = {
   [LOCALHOST]   : "http://localhost:8080",
   [DEVELOPMENT] : "https://dev-netmarble.herokuapp.com",
   [STAGING]     : "https://stage-netmarble.herokuapp.com",
-  [PRODUCTION]  : "https://netmarble.herokuapp.com"
+  [PRODUCTION]  : "https://netmarble.herokuapp.com",
+  [REQRES]      : "https://reqres.in",
 };
 
-export const HOST = BASE_URL[process.env.REACT_APP_CURRENT_ENV || Environments[LOCALHOST]];
+export const HOST = BASE_URL[process.env.REACT_APP_CURRENT_ENV || Environments[REQRES]];
 
 // export const API = "/network_api";
 export const API = "/api";

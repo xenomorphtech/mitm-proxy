@@ -93,7 +93,7 @@ const Dashboard = (props) => {
   );
 
   return (
-    <Layout title="Dashboard" role={USER}>
+    <Layout title="Dashboard" role={USER} user={{}}>
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Box>
@@ -110,7 +110,6 @@ const Dashboard = (props) => {
                 hexCode={hexCode}
                 setHexCode={setHexCode}
               />
-              <Button onClick={() => setOpen(true)}>Open Dialog</Button>
             </Grid>
             <Grid item xs={12} sm={6} md={8} lg={8}>
               <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>

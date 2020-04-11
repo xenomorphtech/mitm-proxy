@@ -1,6 +1,6 @@
 import TYPE from "../Types/Auth";
 import TYPE_PAGE from "../Types/Page";
-import { signInAPI, signUpAPI } from "../../Api/Auth";
+import { logInAPI, signUpAPI } from "../../Api/Auth";
 
 const makeAction = (api, successType, failureType) => (payload) => async (dispatch, getState) => {
   dispatch({ type: TYPE_PAGE.SHOW_BACKDROP, payload: { count: ++getState().page.backdrop.count } });
@@ -15,6 +15,10 @@ const makeAction = (api, successType, failureType) => (payload) => async (dispat
   }
 };
 
-export const signIn = makeAction(signInAPI, TYPE.SIGN_IN_SUCCESS, TYPE.SIGN_IN_FAILURE);
+export const logIn = makeAction(logInAPI, TYPE.SIGN_IN_SUCCESS, TYPE.SIGN_IN_FAILURE);
 
 export const signUp = makeAction(signUpAPI, TYPE.SIGN_UP_SUCCESS, TYPE.SIGN_UP_FAILURE);
+
+export const resetUser = () => (dispatch) => {
+  dispatch({ type: TYPE.RESET_USER, payload: {} });
+}

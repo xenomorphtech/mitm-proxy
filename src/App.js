@@ -30,8 +30,8 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Switch>
-            <Route exact path="/" children={<Dashboard />} />
-            <Route exact path="/login" children={<Login />} />
+            <Route exact path="/dashboard" children={<Dashboard />} />
+            <Route exact path="/" children={<Login />} />
           </Switch>
         </Router>
       </ThemeProvider>

@@ -41,10 +41,10 @@ const PacketNotes = (props) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="secondary">
+        <Button variant="contained" onClick={handleClose} color="secondary">
           Cancel
           </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button variant="contained" onClick={handleClose} color="primary">
           Save Notes
           </Button>
       </DialogActions>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -88,9 +88,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NavBar = (props) => {
-  const { title, role, user, history, resetUser} = props;
   const classes = useStyles();
   const theme = useTheme();
+
+  const { history, user, resetUser } = props;
+  const { title, role } = props;
+
   const [open, setOpen] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -106,7 +109,7 @@ const NavBar = (props) => {
 
   const sideList = (
     LINKS.filter(({ roles }) => roles.includes(role)).map(({ label, href, icon }) => (
-      <ListItem button key={href}>
+      <ListItem button key={href} onClick={() => history.push(href)}>
         <ListItemIcon>{icon}</ListItemIcon>
         <ListItemText primary={label} />
       </ListItem>
@@ -303,7 +306,7 @@ const NavBar = (props) => {
 };
 
 const mapStateToProps = state => ({
-  user: state.auth
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps, {

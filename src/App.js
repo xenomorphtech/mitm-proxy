@@ -11,6 +11,7 @@ import "./App.css";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Dashboard from "./Pages/Dashboard";
+import Communication from "./Pages/Communication";
 import Login from "./Pages/Login";
 
 const App = () => {
@@ -21,7 +22,7 @@ const App = () => {
     return createMuiTheme({
       palette: {
         type: prefersDarkMode ? 'dark' : 'light',
-      },
+      }
     })
   }, [prefersDarkMode]);
 
@@ -30,8 +31,9 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Switch>
-            <Route exact path="/dashboard" children={<Dashboard />} />
             <Route exact path="/" children={<Login />} />
+            <Route exact path="/dashboard" children={<Dashboard />} />
+            <Route exact path="/communication" children={<Communication />} />
           </Switch>
         </Router>
       </ThemeProvider>

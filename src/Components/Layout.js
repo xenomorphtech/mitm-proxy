@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const Layout = (props) => {
   const classes = useStyles();
-  const { role, title, snackbar, hideSnackbar, backdrop } = props;
+  const { role, title, snackbar, hideSnackbar, backdrop, navbar = true } = props;
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -33,17 +33,21 @@ const Layout = (props) => {
 
   return (
     <div className={classes.root}>
-      {snackbar && <Snackbar
-        open={snackbar.open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message={snackbar.msg}
-        TransitionComponent={(props) => <Grow {...props} />}
-      />}
-      {backdrop.count && <Backdrop className={classes.backdrop} open={Boolean(backdrop.count)}>
-        <CircularProgress color="inherit" />
-      </Backdrop>}
-      <NavBar role={role} title={title} />
+      {snackbar ?
+        <Snackbar
+          open={snackbar.open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          message={snackbar.msg}
+          TransitionComponent={(props) => <Grow {...props} />}
+        /> : <></>
+      }
+      {backdrop.count ?
+        <Backdrop className={classes.backdrop} open={Boolean(backdrop.count)}>
+          <CircularProgress color="inherit" />
+        </Backdrop> : <></>
+      }
+      {navbar ? <NavBar role={role} title={title} /> : <></>}
       {props.children}
     </div>
   );

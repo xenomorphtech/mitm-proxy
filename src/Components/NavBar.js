@@ -6,15 +6,17 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import { Menu, ChevronRight, ChevronLeft } from "@material-ui/icons";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider } from "@material-ui/core";
+import { Menu, ChevronRight, ChevronLeft, Mail, Notifications, AccountCircle, More } from "@material-ui/icons";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton } from "@material-ui/core";
 
 import { LINKS } from "../Constants/Roles";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
+  grow: {
+    flexGrow: 1
+  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
@@ -66,7 +68,19 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-  }
+  },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+  },
 }));
 
 const NavBar = (props) => {
@@ -117,6 +131,40 @@ const NavBar = (props) => {
           <Typography variant="h6" noWrap>
             {title}
           </Typography>
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <Mail />
+              </Badge>
+            </IconButton>
+            <IconButton aria-label="show 17 new notifications" color="inherit">
+              <Badge badgeContent={17} color="secondary">
+                <Notifications />
+              </Badge>
+            </IconButton>
+            <IconButton
+              edge="end"
+              aria-label="account of current user"
+              // aria-controls={menuId}
+              aria-haspopup="true"
+              // onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="show more"
+              // aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              // onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <More />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer

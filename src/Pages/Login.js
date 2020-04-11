@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import { Typography, Box, TextField, Button } from "@material-ui/core";
 
 import { signIn } from "../Redux/Actions/Auth";
+import Layout from "../Components/Layout";
 
 const initForm = {
   username: {
@@ -28,6 +29,8 @@ const initForm = {
     type: "password"
   }
 };
+
+const formOrder = ["username", "password"];
 
 const Login = (props) => {
   const {
@@ -77,7 +80,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (!isEmpty(user)) {
-      // history.push("/");
+      history.push("/dashboard");
     }
   }, [user]);
 
@@ -94,57 +97,76 @@ const Login = (props) => {
   const loginBtnDisabled = !Object.values(form).every(e => !isEmpty(e.value) || e.error === false);
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center"
-      style={{ height: "100vh" }}
-    >
-      <Grid container xs={11} md={6} lg={4}>
-        <Paper elevation={4} className="w-100">
-          <Box p={2}>
-            <Typography gutterBottom variant="h4" component="h1">
-              {/* Network Client */}
-            </Typography>
-            <br></br>
-            <br></br>
-            {Object.values(form).map(e => (
-              <>
-                <TextField
-                  className="w-100"
-                  variant="outlined"
-                  onChange={formChange}
-                  onBlur={formBlur}
-                  label={e.label}
-                  name={e.name}
-                  value={e.value}
-                  error={e.error}
-                  helperText={e.error ? e.helperText : " "}
-                  type={e.type}
-                />
-                <br></br>
-                <br></br>
-              </>
-            ))}
-            <Button
-              disabled={loginBtnDisabled}
-              className="w-100"
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={onClickLogin}
-            >
-              <Box p={1}>
-                <Typography variant="h6" component="h2">
-                  LOGIN
+    <Layout navbar={false}>
+      <Paper className="w-100">
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          style={{ height: "100vh" }}
+        >
+          <Grid container xs={11} sm={6} md={6} lg={4}>
+            <Paper elevation={4} className="w-100">
+              <Box px={2} py={4}>
+                <Typography
+                  variant="h6"
+                  component="h1"
+                  align="center"
+                  className="font-source-code-pro"
+                >
+                  <strong>MITM PROXY</strong>
                 </Typography>
+                <br />
+                <br />
+                <Typography
+                  variant="body1"
+                  align="center"
+                  paragraph
+                >
+                  Sign In to your start network analysis
+              </Typography>
+                {formOrder.map(e => (
+                  <>
+                    <TextField
+                      className="w-100"
+                      variant="outlined"
+                      onChange={formChange}
+                      onBlur={formBlur}
+                      label={form[e].label}
+                      name={form[e].name}
+                      value={form[e].value}
+                      error={form[e].error}
+                      helperText={form[e].error ? form[e].helperText : " "}
+                      type={form[e].type}
+                    />
+                    <br />
+                    <br />
+                  </>
+                ))}
+                <br />
+                <br />
+                <br />
+                <Grid
+                  container
+                  direction="row-reverse"
+                >
+                  <Button
+                    disabled={loginBtnDisabled}
+                    variant="contained"
+                    size="large"
+                    color="primary"
+                    onClick={onClickLogin}
+                  >
+                    Submit
+                </Button>
+                </Grid>
               </Box>
-            </Button>
-          </Box>
-        </Paper>
-      </Grid>
-    </Grid>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Layout>
   );
 };
 

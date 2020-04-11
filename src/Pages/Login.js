@@ -7,76 +7,17 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Typography, Box, TextField, Button } from "@material-ui/core";
 
-import { signIn } from "../Redux/Actions/Auth";
 import Layout from "../Components/Layout";
+import Tabs from "../Components/Tabs";
+import LogInView from "../Components/Partials/LogInView";
+import SignUpView from "../Components/Partials/SignUpView";
 
-const initForm = {
-  username: {
-    label: "Username",
-    name: "username",
-    value: "",
-    error: false,
-    validation: /[a-zA-Z0-9]{5,}/,
-    helperText: "Username must be 5 letters or more"
-  },
-  password: {
-    label: "Password",
-    name: "password",
-    value: "",
-    error: false,
-    validation: /.{8,}/,
-    helperText: "Password must be 8 letters or more",
-    type: "password"
-  }
-};
-
-const formOrder = ["username", "password"];
 
 const Login = (props) => {
   const {
     history,
-    user,
-    signIn
+    user
   } = props;
-
-  //
-  // ───────────────────────────────────────────────────── FORM UTILITIES ─────
-  //
-
-  const [form, setForm] = useState(initForm);
-
-  const formChange = ({ target: { name, value } }) => {
-    const field = { ...form[name] };
-    field.value = value
-    const newForm = {
-      ...form,
-      [name]: field
-    };
-    setForm(newForm);
-  };
-
-  const formBlur = ({ target: { name, value } }) => {
-    const field = { ...form[name] };
-    field.error = !field.validation.test(value);
-    const newForm = {
-      ...form,
-      [name]: field
-    };
-    setForm(newForm);
-  };
-
-  const validateForm = () => {
-    const newForm = { ...form };
-    Object.values(newForm).forEach(e => {
-      e.error = !e.validation.test(e.value);
-    });
-    setForm(newForm);
-    return Object.values(form).every(v => v.error === false);
-  };
-
-  //
-  // ──────────────────────────────────────────────────────────────────────────
-  //
 
   useEffect(() => {
     if (!isEmpty(user)) {
@@ -84,21 +25,9 @@ const Login = (props) => {
     }
   }, [user]);
 
-  const onClickLogin = () => {
-    // if (validateForm()) {
-    console.log("GO TO DASHBOARD");
-    // Todo : Login API
-    // authenticate(values);
-    signIn();
-    // history.push("/");
-    // }
-  };
-
-  const loginBtnDisabled = !Object.values(form).every(e => !isEmpty(e.value) || e.error === false);
-
   return (
     <Layout navbar={false}>
-      <Paper className="w-100">
+      <Paper square className="w-100">
         <Grid
           container
           direction="row"
@@ -117,50 +46,21 @@ const Login = (props) => {
                 >
                   <strong>MITM PROXY</strong>
                 </Typography>
-                <br />
-                <br />
                 <Typography
                   variant="body1"
                   align="center"
                   paragraph
                 >
-                  Sign In to your start network analysis
-              </Typography>
-                {formOrder.map(e => (
-                  <>
-                    <TextField
-                      className="w-100"
-                      variant="outlined"
-                      onChange={formChange}
-                      onBlur={formBlur}
-                      label={form[e].label}
-                      name={form[e].name}
-                      value={form[e].value}
-                      error={form[e].error}
-                      helperText={form[e].error ? form[e].helperText : " "}
-                      type={form[e].type}
-                    />
-                    <br />
-                    <br />
-                  </>
-                ))}
+                  Web interface for network analysis powered by pure functions
+                </Typography>
                 <br />
                 <br />
-                <br />
-                <Grid
-                  container
-                  direction="row-reverse"
+                <Tabs
+                  tabHeadings={["Log In", "Sign Up"]}
                 >
-                  <Button
-                    disabled={loginBtnDisabled}
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                    onClick={onClickLogin}
-                  >
-                    Submit
-                </Button>
-                </Grid>
+                  <LogInView />
+                  <SignUpView />
+                </Tabs>
               </Box>
             </Paper>
           </Grid>
@@ -175,5 +75,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  signIn
+
 })(withRouter(Login));

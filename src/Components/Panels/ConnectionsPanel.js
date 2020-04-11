@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Faker from "faker";
 
-import { Box, FormControlLabel, Switch, Typography } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
 import Panel from "../Panel";
 import ConnectionsTable from "../Tables/ConnectionsTable";

@@ -31,9 +31,9 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Switch>
-            <Route exact path="/" children={<Communication />} />
+            <Route exact path="/" children={<Login />} />
             <Route exact path="/dashboard" children={<Dashboard />} />
-            <Route exact path="/login" children={<Login />} />
+            <Route exact path="/communication" children={<Communication />} />
           </Switch>
         </Router>
       </ThemeProvider>

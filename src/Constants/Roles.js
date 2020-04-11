@@ -19,7 +19,7 @@ export const LINKS = [
   },
   {
     label: "Communication",
-    href: "/",
+    href: "/communication",
     icon: <Forum />,
     roles: [USER],
     show: {

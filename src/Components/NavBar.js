@@ -6,7 +6,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { ChevronRight, ChevronLeft, Mail, Notifications, AccountCircle, More } from "@material-ui/icons";
+import { ChevronRight, ChevronLeft, Mail, Notifications, AccountCircle, More, ExitToApp } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid } from "@material-ui/core";
 
@@ -133,6 +133,58 @@ const NavBar = (props) => {
     // logOutUser();
   }
 
+  const navBarItems = [
+    {
+      badgeCount: 4,
+      icon: <Mail />,
+      label: "Mail"
+    },
+    {
+      badgeCount: 8,
+      icon: <Notifications />,
+      label: "Notifications"
+    }
+  ];
+
+  const menuItems = [
+    {
+      onClick: () => ({}),
+      icon: <AccountCircle />,
+      label: "Profile"
+    },
+    {
+      onClick: () => ({}),
+      icon: <ExitToApp />,
+      label: "Log Out"
+    }
+  ];
+
+  const makeNavBarItems = (items, isMobile) => items.map(({ badgeCount, icon, label }) => {
+    const view = <>
+      <IconButton aria-label="show 4 new mails" color="inherit">
+        <Badge badgeContent={badgeCount} color="secondary">
+          {icon}
+        </Badge>
+      </IconButton>
+      {isMobile ? <p>{label}</p> : <></>}
+    </>;
+    return isMobile ? <MenuItem>{view}</MenuItem> : view;
+  });
+
+  const makeMenuItems = (items, isMobile) => items.map(({ onClick, label, icon }) => {
+    const view = isMobile ? <>
+      <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+          children={icon}
+      />
+        <p>{label}</p>
+    </> : label;
+    return <MenuItem onClick={onClick}>{view}</MenuItem>;
+  });
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -143,9 +195,7 @@ const NavBar = (props) => {
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+      {makeMenuItems(menuItems, false)}
     </Menu>
   );
 
@@ -159,33 +209,8 @@ const NavBar = (props) => {
       open={Boolean(mobileMoreAnchorEl)}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <Mail />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <Notifications />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      {makeNavBarItems(navBarItems, true)}
+      {user ? makeMenuItems(menuItems, true) : <></>}
     </Menu>
   );
 
@@ -216,16 +241,7 @@ const NavBar = (props) => {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <Mail />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <Notifications />
-              </Badge>
-            </IconButton>
+            {makeNavBarItems(navBarItems, false)}
             {user ? <IconButton
               edge="end"
               aria-label="account of current user"

@@ -89,8 +89,8 @@ const LogInView = (props) => {
   return <>
     <br />
     <br />
-    {formOrder.map(e => (
-      <>
+    {formOrder.map((e, i) => (
+      <span key={i}>
         <TextField
           className="w-100"
           variant="outlined"
@@ -105,7 +105,7 @@ const LogInView = (props) => {
         />
         <br />
         <br />
-      </>
+      </span>
     ))}
     <br />
     <br />

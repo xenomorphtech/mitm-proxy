@@ -21,10 +21,10 @@ const Tabs = (props) => {
       variant="fullWidth"
       aria-label="full width tabs example"
     >
-      {tabHeadings.map(v => <Tab label={v} />)}
+      {tabHeadings.map((v,i) => <Tab key={i} label={v} />)}
     </TabsHeader>
     {children.slice(0, tabsLength).map((v, i) => (
-      <Box hidden={i !== value}>{v}</Box>
+      <Box key={i} hidden={i !== value}>{v}</Box>
     ))}
   </>;
 };

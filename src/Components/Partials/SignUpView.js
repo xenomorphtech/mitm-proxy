@@ -53,7 +53,7 @@ const SignUpView = (props) => {
 
   const [form, setForm] = useState(initForm);
 
-  const [terms, setTerms] = useState(0);
+  const [terms, setTerms] = useState(false);
 
   const formChange = ({ target: { name, value } }) => {
     const field = { ...form[name] };
@@ -95,14 +95,14 @@ const SignUpView = (props) => {
     // }
   };
 
-  
+
   const btnDisabled = !(Object.values(form).every(e => !isEmpty(e.value) || e.error === false) && terms);
 
   return <>
     <br />
     <br />
-    {formOrder.map(e => (
-      <>
+    {formOrder.map((e, i) => (
+      <span key={i}>
         <TextField
           className="w-100"
           variant="outlined"
@@ -117,7 +117,7 @@ const SignUpView = (props) => {
         />
         <br />
         <br />
-      </>
+      </span>
     ))}
     <br />
     <br />
@@ -130,14 +130,14 @@ const SignUpView = (props) => {
         control={
           <Checkbox
             checked={terms}
-            onChange={({ target: { checked }}) => setTerms(checked)}
+            onChange={({ target: { checked } }) => setTerms(checked)}
             name="terms"
             color="primary"
           />
         }
         label="Terms and conditions"
       />
-      <div style={{ flexGrow: 1}}></div>
+      <div style={{ flexGrow: 1 }}></div>
       <Button
         disabled={btnDisabled}
         variant="contained"

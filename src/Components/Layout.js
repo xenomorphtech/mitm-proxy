@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 
 const Layout = (props) => {
   const classes = useStyles();
-  const { role, title, snackbar, hideSnackbar, backdrop, navbar = true } = props;
+  const { role, title, snackbar, hideSnackbar, backdrop, navbar = true, user = null } = props;
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -47,7 +47,7 @@ const Layout = (props) => {
           <CircularProgress color="inherit" />
         </Backdrop> : <></>
       }
-      {navbar ? <NavBar role={role} title={title} /> : <></>}
+      {navbar ? <NavBar role={role} title={title} user={user} /> : <></>}
       {props.children}
     </div>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { withRouter } from "react-router";
 
@@ -6,10 +6,12 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { Menu, ChevronRight, ChevronLeft, Mail, Notifications, AccountCircle, More } from "@material-ui/icons";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton } from "@material-ui/core";
+import { ChevronRight, ChevronLeft, Mail, Notifications, AccountCircle, More } from "@material-ui/icons";
+import MenuIcon from "@material-ui/icons/Menu";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid } from "@material-ui/core";
 
 import { LINKS } from "../Constants/Roles";
+import { connect } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -84,10 +86,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NavBar = (props) => {
-  const { title, role } = props;
+  const { title, role, user } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,6 +109,84 @@ const NavBar = (props) => {
         <ListItemText primary={label} />
       </ListItem>
     ))
+  );
+
+  const handleMenuClose = (e) => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleProfileMenuOpen = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleMobileMenuClose = (e) => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleLogOut = (e) => {
+    setAnchorEl(null);
+    // logOutUser();
+  }
+
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={'primary-search-account-menu'}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={Boolean(anchorEl)}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
+    </Menu>
+  );
+
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      id={'primary-search-account-menu-mobile'}
+      keepMounted
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      open={Boolean(mobileMoreAnchorEl)}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <Mail />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="show 11 new notifications" color="inherit">
+          <Badge badgeContent={11} color="secondary">
+            <Notifications />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
   );
 
 
@@ -126,7 +209,7 @@ const NavBar = (props) => {
               [classes.hide]: open,
             })}
           >
-            <Menu />
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
             {title}
@@ -143,23 +226,23 @@ const NavBar = (props) => {
                 <Notifications />
               </Badge>
             </IconButton>
-            <IconButton
+            {user ? <IconButton
               edge="end"
               aria-label="account of current user"
               // aria-controls={menuId}
               aria-haspopup="true"
-              // onClick={handleProfileMenuOpen}
+              onClick={handleProfileMenuOpen}
               color="inherit"
             >
               <AccountCircle />
-            </IconButton>
+            </IconButton> : <></>}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
               // aria-controls={mobileMenuId}
               aria-haspopup="true"
-              // onClick={handleMobileMenuOpen}
+              onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <More />
@@ -190,8 +273,16 @@ const NavBar = (props) => {
           {sideList}
         </List>
       </Drawer>
+      {renderMenu}
+      {renderMobileMenu}
     </>
   );
 };
 
-export default withRouter(NavBar);
+const mapStateToProps = state => ({
+  user: state.auth
+});
+
+export default connect(mapStateToProps, {
+  // logOutUser
+})(withRouter(NavBar));

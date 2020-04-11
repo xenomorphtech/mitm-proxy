@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { Typography, Box, TextField, Button } from "@material-ui/core";
+import { Typography, Box } from "@material-ui/core";
 
 import Layout from "../Components/Layout";
 import Tabs from "../Components/Tabs";
@@ -35,7 +35,7 @@ const Login = (props) => {
           alignItems="center"
           style={{ height: "100vh" }}
         >
-          <Grid container xs={11} sm={6} md={6} lg={4}>
+          <Grid container item xs={11} sm={6} md={6} lg={4}>
             <Paper elevation={4} className="w-100">
               <Box px={2} py={4}>
                 <Typography

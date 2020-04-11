@@ -1,35 +1,60 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
-import C from "../../Utils/Conversion";
-import ChunkHex from "../HexEditor/ChunkHex";
+import React, { useState } from "react";
 
-// Todo
-// 
-// 1. AddressView, HexView, AsciiView
-// 2. Identity Packet Size and Set Height of View accordingly
+import { Notes } from "@material-ui/icons";
+import { Box, Grid, Paper, Typography, IconButton, makeStyles } from "@material-ui/core";
+
+import PacketNotes from "../Modals/PacketNotes";
+import PacketsTable from "../Tables/PacketsTable";
+
+const useStyles = makeStyles((theme) => ({
+  grow: {
+    flexGrow: 1
+  },
+  packet: {
+    transition: "background 0.150s ease-in-out",
+    "&:hover": {
+      background: theme.palette.type === "dark" ? "#FFFFFF09" : "#00000009"
+    }
+  }
+}));
 
 const PacketView = (props) => {
-  const { hexStr } = props;
-  
-  const lines = hexStr.match(/.{1,32}/g);
+  const classes = useStyles();
+  const { packets } = props;
 
-  const makeAddressStr = (i) => "0x" + "0".repeat(8 - String(i * 10).length) + i * 10;
+  const [open, setOpen] = useState(false);
+  const [notes, setNotes] = useState("");
 
-  return (
-    <Grid className="font-source-code-pro" container direction="row">
-      <Grid item xs={12} sm={12} md={12} lg={12}>Length : {hexStr.length}</Grid>
-      {lines.map((line, i) => (
-        <>
-          <Grid item xs={2} sm={2} md={2} lg={2}>{makeAddressStr(i)}</Grid>
-          {/* <Grid item xs={8} sm={8} md={6} lg={6}>{line.toUpperCase()}</Grid> */}
-          <Grid item xs={8} sm={8} md={7} lg={6}><ChunkHex chunk={line.match(/.{1,2}/g)}/></Grid>
-          <Grid item xs={2} sm={2} md={3} lg={4}>{C.hexToAscii(line).replace(/ /g, ".")}</Grid>
-        </>
+  const onClickNotes = (i) => () => {
+    setOpen(true);
+  };
+
+  return <>
+    <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
+      {packets.map(({ len, str }, i) => (
+        <Box p={2} className={classes.packet}>
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+          >
+            <Typography variant="caption">Packet size : {len}</Typography>
+            <div className={classes.grow}></div>
+            <IconButton onClick={onClickNotes(i)}><Notes /></IconButton>
+          </Grid>
+          <PacketsTable list={str.match(/.{1,32}/g) || []} />
+          <br />
+          <br />
+        </Box>
       ))}
-      <br/>
-      <br/>
-    </Grid>
-  );
+    </Paper>
+    <PacketNotes
+      open={open}
+      setOpen={setOpen}
+      notes={notes}
+      setNotes={setNotes}
+    />
+  </>;
 };
 
 export default PacketView;

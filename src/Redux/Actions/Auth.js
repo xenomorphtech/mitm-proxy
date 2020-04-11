@@ -21,4 +21,8 @@ export const signUp = makeAction(signUpAPI, TYPE.SIGN_UP_SUCCESS, TYPE.SIGN_UP_F
 
 export const resetUser = () => (dispatch) => {
   dispatch({ type: TYPE.RESET_USER, payload: {} });
-}
+};
+
+export const setUser = (payload) => (dispatch) => {
+  dispatch({ type: TYPE.SET_USER, payload });
+};

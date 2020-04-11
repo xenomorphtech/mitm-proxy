@@ -13,6 +13,7 @@ import "typeface-source-code-pro";
 import "typeface-roboto";
 
 import { getUserDetails } from "../Utils/LocalStorage";
+import { setUser } from "../Redux/Actions/Auth";
 
 
 const useStyles = makeStyles(theme => ({
@@ -27,13 +28,14 @@ const useStyles = makeStyles(theme => ({
 
 const Layout = (props) => {
   const classes = useStyles();
-  const { history, snackbar, backdrop, hideSnackbar } = props;
+  const { history, user, setUser, snackbar, backdrop, hideSnackbar } = props;
 
-  const { role, title, navbar = true, user = null } = props;
+  const { role, title, navbar = true } = props;
 
   useEffect(() => {
     const userDetails = getUserDetails();
     if (!isEmpty(userDetails)) {
+      setUser(userDetails);
       if(history.location.pathname === "/"){
         history.push("/dashboard");
       }
@@ -72,10 +74,12 @@ const Layout = (props) => {
 };
 
 const mapStateToProps = state => ({
+  user: state.auth.user,
   snackbar: state.page.snackbar,
   backdrop: state.page.backdrop
 });
 
 export default connect(mapStateToProps, {
+  setUser,
   hideSnackbar
 })(withRouter(Layout));

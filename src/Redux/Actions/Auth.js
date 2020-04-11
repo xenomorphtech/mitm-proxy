@@ -18,3 +18,7 @@ const makeAction = (api, successType, failureType) => (payload) => async (dispat
 export const logIn = makeAction(logInAPI, TYPE.SIGN_IN_SUCCESS, TYPE.SIGN_IN_FAILURE);
 
 export const signUp = makeAction(signUpAPI, TYPE.SIGN_UP_SUCCESS, TYPE.SIGN_UP_FAILURE);
+
+export const resetUser = () => (dispatch) => {
+  dispatch({ type: TYPE.RESET_USER, payload: {} });
+}

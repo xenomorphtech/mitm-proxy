@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { isEmpty } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Snackbar, Grow, Backdrop, CircularProgress } from "@material-ui/core";
@@ -9,6 +11,9 @@ import { hideSnackbar } from "../Redux/Actions/Page";
 
 import "typeface-source-code-pro";
 import "typeface-roboto";
+
+import { getUserDetails } from "../Utils/LocalStorage";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -22,7 +27,20 @@ const useStyles = makeStyles(theme => ({
 
 const Layout = (props) => {
   const classes = useStyles();
-  const { role, title, snackbar, hideSnackbar, backdrop, navbar = true, user = null } = props;
+  const { history, snackbar, backdrop, hideSnackbar } = props;
+
+  const { role, title, navbar = true, user = null } = props;
+
+  useEffect(() => {
+    const userDetails = getUserDetails();
+    if (!isEmpty(userDetails)) {
+      if(history.location.pathname === "/"){
+        history.push("/dashboard");
+      }
+    } else {
+      history.push("/");
+    }
+  }, []);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -60,4 +78,4 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   hideSnackbar
-})(Layout);
+})(withRouter(Layout));

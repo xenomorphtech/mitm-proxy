@@ -12,6 +12,8 @@ import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divide
 
 import { LINKS } from "../Constants/Roles";
 import { connect } from "react-redux";
+import { resetUser } from "./../Redux/Actions/Auth";
+import { resetUserDetails } from "../Utils/LocalStorage";
 
 const drawerWidth = 240;
 
@@ -86,7 +88,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const NavBar = (props) => {
-  const { title, role, user } = props;
+  const { title, role, user, history, resetUser} = props;
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -129,9 +131,14 @@ const NavBar = (props) => {
   };
 
   const handleLogOut = (e) => {
-    setAnchorEl(null);
-    // logOutUser();
-  }
+    handleMenuClose();
+    // resetting localStorage
+    resetUserDetails();
+    // resetting ReduxStore
+    resetUser();
+    // routing to Login Page
+    history.push("/");
+  };
 
   const navBarItems = [
     {
@@ -153,7 +160,7 @@ const NavBar = (props) => {
       label: "Profile"
     },
     {
-      onClick: () => ({}),
+      onClick: handleLogOut,
       icon: <ExitToApp />,
       label: "Log Out"
     }
@@ -300,5 +307,5 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  // logOutUser
+  resetUser
 })(withRouter(NavBar));

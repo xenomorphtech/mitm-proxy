@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { data } from "../__Mocks__/Data/Hex";
-import { Box, Grid, Paper, Typography } from "@material-ui/core";
+import { Box, Grid, Paper, Typography, Button, IconButton } from "@material-ui/core";
+import { Notes } from "@material-ui/icons";
 
 import Layout from "../Components/Layout";
-import PacketView from "../Components/PacketsViewer/PacketView";
 import DataInspectorPanel from "../Components/Panels/DataInspectorPanel";
 import ConnectionsPanel from "../Components/Panels/ConnectionsPanel";
 
@@ -14,8 +14,12 @@ import PacketsTable from "../Components/Tables/PacketsTable";
 
 import { USER } from "../Constants/Roles";
 import { connections } from "../__Mocks__/Data/Connection";
+import PacketNotes from "../Components/Modals/PacketNotes";
 
 const useStyles = makeStyles((theme) => ({
+  grow: {
+    flexGrow: 1
+  },
   toolbar: {
     display: "flex",
     alignItems: "center",
@@ -28,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginTop: theme.spacing(1),
     padding: theme.spacing(1),
+  },
+  packet: {
+    transition: "background 0.150s ease-in-out",
+    "&:hover": {
+      background: theme.palette.type === "dark" ? "#FFFFFF09" : "#00000009"
+    }
   }
 }));
 
@@ -51,11 +61,36 @@ const Dashboard = (props) => {
 
   const { hexCode: { selectedHexCode } } = props;
 
+  const [open, setOpen] = useState(false);
+  const [notes, setNotes] = useState("");
+
   const [hexCode, setHexCode] = useState(selectedHexCode);
 
   useEffect(() => {
     setHexCode(selectedHexCode);
   }, [selectedHexCode]);
+
+  const onClickPacket = (i) => () => {
+    console.log("Notes", i);
+    setOpen(true);
+  };
+
+  const packetsView = ({ len, str }, i) => (
+    <Box p={2} className={classes.packet}>
+      <Grid
+        container
+        direction="row"
+        alignItems="center"
+      >
+        <Typography variant="caption">Packet size : {len}</Typography>
+        <div className={classes.grow}></div>
+        <IconButton onClick={onClickPacket(i)}><Notes /></IconButton>
+      </Grid>
+      <PacketsTable list={str.match(/.{1,32}/g) || []} />
+      <br />
+      <br />
+    </Box>
+  );
 
   return (
     <Layout title="Dashboard" role={USER}>
@@ -75,24 +110,24 @@ const Dashboard = (props) => {
                 hexCode={hexCode}
                 setHexCode={setHexCode}
               />
+              <Button onClick={() => setOpen(true)}>Open Dialog</Button>
             </Grid>
             <Grid item xs={12} sm={6} md={8} lg={8}>
               <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
-                <Box p={2}>
-                  {/* {packets.map(({ str }) => <PacketView hexStr={str} />)} */}
-                  {packets.map(({ len, str }) => <>
-                    <Typography variant="caption">Packet size : {len}</Typography>
-                    <PacketsTable list={str.match(/.{1,32}/g)} />
-                    <br />
-                    <br />
-                  </>)}
-
-                </Box>
+                {/* <Box p={2}> */}
+                  {packets.map(packetsView)}
+                {/* </Box> */}
               </Paper>
             </Grid>
           </Grid>
         </Box>
       </main>
+      <PacketNotes
+        open={open}
+        setOpen={setOpen}
+        notes={notes}
+        setNotes={setNotes}
+      />
     </Layout >
   );
 };

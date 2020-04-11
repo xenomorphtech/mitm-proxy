@@ -10,6 +10,12 @@ export default (state = initialState, { type, payload }) => {
     case TYPE.SIGN_IN_SUCCESS:
       return { ...state, user: payload };
 
+    case TYPE.SET_USER:
+      return { ...state, user: payload };
+
+    case TYPE.RESET_USER:
+      return {};
+
     default:
       return state;
   }

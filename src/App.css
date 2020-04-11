@@ -12,5 +12,5 @@ body {
 }
 
 .font-source-code-pro {
-  font-family: "Source Code Pro";
+  font-family: "Source Code Pro", monospace !important;
 }

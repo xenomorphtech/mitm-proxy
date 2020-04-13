@@ -37,7 +37,7 @@ const PacketsTable = (props) => {
 
   return (
     <TableContainer>
-      <Table className={classes.table} size="small" aria-label="simple table">
+      <Table size="small" aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
@@ -48,9 +48,9 @@ const PacketsTable = (props) => {
         <TableBody>
           {list.map((line, i) => (
             <TableRow key={i}>
-              <TableCell align="left" className={classes.addressCell + " font-source-code-pro"}>{makeAddressStr(i)}</TableCell>
-              <TableCell align="left" className={classes.packetsCell + " font-source-code-pro"}><ChunkHex chunk={line.match(/.{1,2}/g)}/></TableCell>
-              <TableCell align="left" className={classes.asciiCell + " font-source-code-pro"}>{C.hexToAscii(line).replace(/ /g, ".")}</TableCell>
+              <TableCell align="left" className="address-cell font-source-code-pro">{makeAddressStr(i)}</TableCell>
+              <TableCell align="left" className="packets-cell font-source-code-pro"><ChunkHex chunk={line.match(/.{1,2}/g)}/></TableCell>
+              <TableCell align="left" className="ascii-cell font-source-code-pro">{C.hexToAscii(line).replace(/ /g, ".")}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -33,7 +33,7 @@ const PacketView = (props) => {
     <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
       {packets.map(({ len, str }, i) => (
         <Box p={2} className={classes.packet}>
-          <Grid
+          {/* <Grid
             container
             direction="row"
             alignItems="center"
@@ -41,10 +41,16 @@ const PacketView = (props) => {
             <Typography variant="caption">Packet size : {len}</Typography>
             <div className={classes.grow}></div>
             <IconButton onClick={onClickNotes(i)}><Notes /></IconButton>
+          </Grid> */}
+          <Grid
+            container
+            direction="row"
+          >
+            {i % 2 ? <div className={classes.grow}></div> : <></>}
+            <PacketsTable list={str.match(/.{1,32}/g) || []} />
           </Grid>
-          <PacketsTable list={str.match(/.{1,32}/g) || []} />
-          <br />
-          <br />
+          {/* <br /> */}
+          {/* <br /> */}
         </Box>
       ))}
     </Paper>

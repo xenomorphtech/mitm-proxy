@@ -14,3 +14,43 @@ body {
 .font-source-code-pro {
   font-family: "Source Code Pro", monospace !important;
 }
+
+.packet {
+  transition: background 0.150s ease-in-out;
+}
+
+.packet:hover {
+  background: #FFFFFF09;
+}
+
+.packets-cell {
+  padding: 0px 0px 0px 0px !important;
+  width: 420px;
+  max-width: 420px;
+  min-width: 420px;
+}
+
+.address-cell {
+  padding: 0px 0px 0px 0px !important;
+  width: 100px;
+  max-width: 100px;
+  min-width: 100px;
+}
+
+.ascii-cell {
+  padding: 0px 0px 0px 0px !important;
+  width: 140px;
+  max-width: 140px;
+  min-width: 140px;
+}
+
+.hex-span {
+  text-align: center;
+  cursor: pointer;
+  padding: 0px 4px 0px 4px !important;
+  transition: background 0.150s ease-out;
+}
+
+.hex-span:hover {
+  background: #FFFFFF50;
+}

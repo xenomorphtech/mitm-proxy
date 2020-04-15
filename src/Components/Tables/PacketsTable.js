@@ -50,7 +50,7 @@ const PacketsTable = (props) => {
             <TableRow key={i}>
               <TableCell align="left" className="address-cell font-source-code-pro">{makeAddressStr(i)}</TableCell>
               <TableCell align="left" className="packets-cell font-source-code-pro"><ChunkHex chunk={line.match(/.{1,2}/g)}/></TableCell>
-              <TableCell align="left" className="ascii-cell font-source-code-pro">{C.hexToAscii(line).replace(/ /g, ".")}</TableCell>
+              <TableCell align="left" className="ascii-cell font-source-code-pro">{C.replaceNonAscii(C.hexToAscii(line))}</TableCell>
             </TableRow>
           ))}
         </TableBody>

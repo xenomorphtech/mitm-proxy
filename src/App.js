@@ -16,7 +16,7 @@ import Login from "./Pages/Login";
 
 const App = () => {
 
-  const prefersDarkMode = true;
+  const prefersDarkMode = false;
 
   const theme = useMemo(() => {
     return createMuiTheme({

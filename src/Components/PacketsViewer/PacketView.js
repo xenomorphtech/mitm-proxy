@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Notes } from "@material-ui/icons";
 import { Box, Grid, Paper, Typography, IconButton } from "@material-ui/core";
@@ -45,7 +45,7 @@ const PacketView = (props) => {
   const noOfPackets = packets.length;
 
   return <>
-    <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
+    <Paper style={{ height: window.innerHeight - 88, overflow: "scroll" }}>
       <Virtualized
         dataArray={packets}
         useDynamicRowHeight={true}

@@ -6,9 +6,9 @@ const quantum = 4;
 const offset = 16;
 
 export const packets = () => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-  // .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
-  // .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
-  // .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
+  .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
+  .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
+  .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat()
   .map(v => [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).flat().map((v) => {
     const len = parseInt((Math.random() * 256) / quantum) * quantum;
     const str = hexStr.slice(len, len + len);

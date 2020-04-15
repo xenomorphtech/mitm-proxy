@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Switch, Radio } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Radio } from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
@@ -25,21 +25,21 @@ const ConnectionsTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {list.map((connection, i) => (
-            <TableRow key={connection.name}>
-              <TableCell>{connection.name}</TableCell>
-              <TableCell className="font-source-code-pro">{connection.ip}</TableCell>
-              <TableCell className="font-source-code-pro">{connection.port}</TableCell>
-              <TableCell align="right">
-                <Radio
-                  checked={connection.connected}
-                  onChange={onToggle("connection-" + i)}
-                  name={"connection-" + i}
-                  color="primary"
-                />
-              </TableCell>
-            </TableRow>
-          ))}
+            {list.map((connection, i) => (
+              <TableRow key={connection.name}>
+                <TableCell>{connection.name}</TableCell>
+                <TableCell className="font-source-code-pro">{connection.ip}</TableCell>
+                <TableCell className="font-source-code-pro">{connection.port}</TableCell>
+                <TableCell align="right">
+                  <Radio
+                    checked={connection.connected}
+                    onChange={onToggle("connection-"+i)}
+                    name={"connection-"+i}
+                    color="primary"
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

@@ -1,60 +1,59 @@
 import React, { useState, useEffect } from "react";
 
 import { Notes } from "@material-ui/icons";
-import { Box, Grid, Paper, Typography, IconButton, makeStyles } from "@material-ui/core";
+import { Box, Grid, Paper, Typography, IconButton } from "@material-ui/core";
 
 import PacketNotes from "../Modals/PacketNotes";
 import PacketsTable from "../Tables/PacketsTable";
-
-const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1
-  },
-  packet: {
-    transition: "background 0.150s ease-in-out",
-    "&:hover": {
-      background: theme.palette.type === "dark" ? "#FFFFFF09" : "#00000009"
-    }
-  }
-}));
+import Virtualized from "../Virtualized";
 
 const PacketView = (props) => {
-  const classes = useStyles();
   const { packets } = props;
 
   const [open, setOpen] = useState(false);
   const [notes, setNotes] = useState("");
 
-  const onClickNotes = (i) => () => {
-    setOpen(true);
-  };
+  // const onClickNotes = (i) => () => {
+  //   setOpen(true);
+  // };
 
-  useEffect(() => {
+  const getRowHeight = ({ index }) => packets[index].size;
 
-  }, [packets]);
+  const rowRenderer = ({ index, key, style }) => (
+    <Box p={2} key={key} style={style} className="packet">
+      {/* <Grid
+        container
+        direction="row"
+        alignItems="center"
+      >
+        <Typography variant="caption">Packet size : {packets[index].len}</Typography>
+        <div style={{ flexGrow: 1 }}></div>
+        <IconButton onClick={onClickNotes(index)}><Notes /></IconButton>
+      </Grid> */}
+      <Grid
+        container
+        direction="row"
+      >
+        {index % 2 ? <div style={{ flexGrow: 1 }}></div> : <></>}
+        <PacketsTable list={packets[index].lines} />
+      </Grid>
+      {/* <br /> */}
+      {/* <br /> */}
+    </Box>
+  );
+
+  const noOfPackets = packets.length;
 
   return <>
     <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
-      {packets.map(({ len, str }, i) => (
-        <Box p={2} className={classes.packet}>
-          {/* <Grid
-            container
-            direction="row"
-            alignItems="center"
-          >
-            <Typography variant="caption">Packet size : {len}</Typography>
-            <div className={classes.grow}></div>
-            <IconButton onClick={onClickNotes(i)}><Notes /></IconButton>
-          </Grid> */}
-          <Grid
-            container
-            direction="row"
-          >
-            {i % 2 ? <div className={classes.grow}></div> : <></>}
-            <PacketsTable list={str.match(/.{1,32}/g) || []} />
-          </Grid>
-        </Box>
-      ))}
+      <Virtualized
+        dataArray={packets}
+        useDynamicRowHeight={true}
+        rowRenderer={rowRenderer}
+        getRowHeight={getRowHeight}
+        overscan={10}
+        scrollToIndex={noOfPackets - 1}
+      />
     </Paper>
     <PacketNotes
       open={open}

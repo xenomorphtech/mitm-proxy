@@ -7,14 +7,14 @@
  */
 
 
-const _ = require("lodash");
+import _ from "lodash";
 
 /**
  * Takes a ASCII string and returns a HEX string.
  * @param {String} str ASCII string
  * @return {String} HEX String
  */
-const asciiToHex = (str) => {
+export const asciiToHex = (str) => {
   const arr = [];
   let i = 0, len = str.length;
   while (i < len) {
@@ -31,7 +31,7 @@ const asciiToHex = (str) => {
  * @param {String} str HEX string
  * @return {String} ASCII String
  */
-const hexToAscii = (hex) => {
+export const hexToAscii = (hex) => {
   hex = hex.toString();
   let i = 0, str = '', len = hex.length;
   while (i < len) {
@@ -41,7 +41,7 @@ const hexToAscii = (hex) => {
   return str;
 };
 
-const strToHexChunks = (str) => str.match(/.{1,2}/g);
+export const strToHexChunks = (str) => str.match(/.{1,2}/g);
 
 
 /**
@@ -49,7 +49,7 @@ const strToHexChunks = (str) => str.match(/.{1,2}/g);
  * @param {String} str HEX string
  * @return {Int} Integer
  */
-const hexToDecimal = (str) => parseInt(str, 16);
+export const hexToDecimal = (str) => parseInt(str, 16);
 
 
 
@@ -58,7 +58,7 @@ const hexToDecimal = (str) => parseInt(str, 16);
  * @param {Int} num Integer
  * @return {String} Hex string
  */
-const decimalToHex = (num) => Number(num).toString(16);
+export const decimalToHex = (num) => Number(num).toString(16);
 
 
 
@@ -67,7 +67,7 @@ const decimalToHex = (num) => Number(num).toString(16);
  * @param {String} str HEX string
  * @return {Int} Binary string
  */
-const hexToBinary = (str) => parseInt(str, 16).toString(2);
+export const hexToBinary = (str) => parseInt(str, 16).toString(2);
 
 
 
@@ -76,23 +76,24 @@ const hexToBinary = (str) => parseInt(str, 16).toString(2);
  * @param {Int} num Binary string
  * @return {String} Hex string
  */
-const binaryToHex = (num) => parseInt(num,2).toString(16);
+export const binaryToHex = (num) => parseInt(num,2).toString(16);
 
 
-const binArrToBinStr = (arr) => arr.map(v => v ? 1 : 0).join("");
+export const binArrToBinStr = (arr) => arr.map(v => v ? 1 : 0).join("");
 
-const binStrToBinArr = (str) => str.split("").map(v => v === "1" ? 1 : 0);
+export const binStrToBinArr = (str) => str.split("").map(v => v === "1" ? 1 : 0);
 
-const makeNiceBinStr = (str) => "0".repeat(8 - str.length) + str;
+export const makeNiceBinStr = (str) => "0".repeat(8 - str.length) + str;
 
-const makeNiceHexStr = (str) => str.length === 1 ? "0"+str : str;
+export const makeNiceHexStr = (str) => str.length === 1 ? "0"+str : str;
 
-const hexToBinArr = (h) => _.flow([hexToBinary, makeNiceBinStr, binStrToBinArr])(h);
+export const hexToBinArr = (h) => _.flow([hexToBinary, makeNiceBinStr, binStrToBinArr])(h);
 
-const binArrToHex = (arr) => _.flow([binArrToBinStr, binaryToHex, makeNiceHexStr])(arr).toUpperCase();
+export const binArrToHex = (arr) => _.flow([binArrToBinStr, binaryToHex, makeNiceHexStr])(arr).toUpperCase();
 
+export const replaceNonAscii = (str) => str.replace(/[^\x00-\x7F]/g, ".");
 
-module.exports = {
+export default {
   asciiToHex,
   hexToAscii,
   strToHexChunks,
@@ -102,6 +103,9 @@ module.exports = {
   binaryToHex,
   binArrToBinStr,
   binStrToBinArr,
+  makeNiceBinStr,
+  makeNiceHexStr,
   hexToBinArr,
-  binArrToHex
-};
+  binArrToHex,
+  replaceNonAscii
+}

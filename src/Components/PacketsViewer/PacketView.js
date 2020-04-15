@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Notes } from "@material-ui/icons";
 import { Box, Grid, Paper, Typography, IconButton, makeStyles } from "@material-ui/core";
@@ -29,6 +29,10 @@ const PacketView = (props) => {
     setOpen(true);
   };
 
+  useEffect(() => {
+
+  }, [packets]);
+
   return <>
     <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
       {packets.map(({ len, str }, i) => (
@@ -49,8 +53,6 @@ const PacketView = (props) => {
             {i % 2 ? <div className={classes.grow}></div> : <></>}
             <PacketsTable list={str.match(/.{1,32}/g) || []} />
           </Grid>
-          {/* <br /> */}
-          {/* <br /> */}
         </Box>
       ))}
     </Paper>

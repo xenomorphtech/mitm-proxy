@@ -9,7 +9,8 @@ const Virtualized = (props) => {
     overscan,
     useDynamicRowHeight,
     getRowHeight,
-    rowRenderer
+    rowRenderer,
+    scrollToIndex
   } = props;
 
   const overscanRowCount = overscan;
@@ -26,6 +27,7 @@ const Virtualized = (props) => {
           rowHeight={useDynamicRowHeight ? getRowHeight : rowHeight}
           rowRenderer={rowRenderer}
           width={width}
+          scrollToIndex={scrollToIndex}
         />
       )}
     </AutoSizer>

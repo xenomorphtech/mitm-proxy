@@ -36,6 +36,8 @@ const PacketView = (props) => {
     </Box>
   );
 
+  const noOfPackets = packets.length;
+
   return <>
     <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
       <Virtualized
@@ -44,6 +46,7 @@ const PacketView = (props) => {
         rowRenderer={rowRenderer}
         getRowHeight={getRowHeight}
         overscan={10}
+        scrollToIndex={noOfPackets - 1}
       />
     </Paper>
     <PacketNotes

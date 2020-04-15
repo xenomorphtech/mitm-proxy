@@ -10,9 +10,28 @@ const SingleHex = (props) => {
     setHexCode
   } = props;
 
+  // const onMouseEnterOnHex = (event) => {
+  //   const { target } = event;
+  //   const { target: { dataset: { hex } } } = event;
+
+  //   target.style.background = "#FFFFFF50";
+  //   // setHexCode(hex);
+  // };
+
+  // const onMouseLeaveFromHex = (event) => {
+  //   const { target } = event;
+  //   const { target: { dataset: { hex } } } = event;
+
+  //   target.style.background = "#FFFFFF00";
+  //   // setHexCode(hex);
+  // };
+
   return (
     <span
-      className="hex-span"
+      className="value-span hex-span"
+      // onMouseEnter={onMouseEnterOnHex}
+      // onMouseLeave={onMouseLeaveFromHex}
+      data-hex={hex}
       onClick={() => setHexCode(hex)}
     >
       {hex.toUpperCase()}

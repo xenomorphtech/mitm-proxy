@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Notes } from "@material-ui/icons";
 import { Box, Grid, Paper, Typography, IconButton } from "@material-ui/core";
@@ -13,15 +13,15 @@ const PacketView = (props) => {
   const [open, setOpen] = useState(false);
   const [notes, setNotes] = useState("");
 
-  const onClickNotes = (i) => () => {
-    setOpen(true);
-  };
+  // const onClickNotes = (i) => () => {
+  //   setOpen(true);
+  // };
 
   const getRowHeight = ({ index }) => packets[index].size;
 
   const rowRenderer = ({ index, key, style }) => (
     <Box p={2} key={key} style={style} className="packet">
-      <Grid
+      {/* <Grid
         container
         direction="row"
         alignItems="center"
@@ -29,10 +29,16 @@ const PacketView = (props) => {
         <Typography variant="caption">Packet size : {packets[index].len}</Typography>
         <div style={{ flexGrow: 1 }}></div>
         <IconButton onClick={onClickNotes(index)}><Notes /></IconButton>
+      </Grid> */}
+      <Grid
+        container
+        direction="row"
+      >
+        {index % 2 ? <div style={{ flexGrow: 1 }}></div> : <></>}
+        <PacketsTable list={packets[index].lines} />
       </Grid>
-      <PacketsTable list={packets[index].lines} />
-      <br />
-      <br />
+      {/* <br /> */}
+      {/* <br /> */}
     </Box>
   );
 

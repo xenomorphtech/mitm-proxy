@@ -1,0 +1,4 @@
+export default {
+  GET_PACKETS: "GET_PACKETS",
+  GET_CONNECTIONS: "GET_CONNECTIONS"
+};

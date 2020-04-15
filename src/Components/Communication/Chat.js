@@ -22,13 +22,13 @@ const Chat = (props) => {
   };
 
   useEffect(() => {
-    paperRef.current.scrollIntoView({ behavior: 'smooth' });
+    paperRef.current.scrollIntoView({ behavior: "smooth" });
     paperRef.current.scrollTo(0, paperRef.current.scrollHeight);
   }, []);
 
 
   return (
-    <Paper ref={paperRef} style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
+    <Paper ref={paperRef} style={{ height: window.innerHeight - 88, overflow: "scroll" }}>
       <Box p={2}>
         {messages.map(messageView)}
       </Box>

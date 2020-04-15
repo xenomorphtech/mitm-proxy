@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { AutoSizer, List } from "react-virtualized";
 
 const Virtualized = (props) => {
+
+  const list = useRef(null);
 
   const {
     dataArray,
@@ -13,6 +15,10 @@ const Virtualized = (props) => {
     scrollToIndex
   } = props;
 
+  useEffect(() => {
+    list.current.recomputeRowHeights();
+  }, [dataArray]);
+
   const overscanRowCount = overscan;
   const rowCount = dataArray.length;
 
@@ -20,7 +26,7 @@ const Virtualized = (props) => {
     <AutoSizer>
       {({ height, width }) => (
         <List
-          ref="List"
+          ref={list}
           height={height}
           overscanRowCount={overscanRowCount}
           rowCount={rowCount}

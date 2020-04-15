@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Switch } from "@material-ui/core";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Switch, Radio } from "@material-ui/core";
 
 const useStyles = makeStyles({
   table: {
@@ -15,7 +15,7 @@ const ConnectionsTable = (props) => {
 
   return (
     <TableContainer>
-      <Table className={classes.table} aria-label="simple table">
+      <Table className={classes.table} aria-label="connection table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -27,13 +27,11 @@ const ConnectionsTable = (props) => {
         <TableBody>
           {list.map((connection, i) => (
             <TableRow key={connection.name}>
-              <TableCell component="th" scope="row">
-                {connection.name}
-              </TableCell>
+              <TableCell>{connection.name}</TableCell>
               <TableCell className="font-source-code-pro">{connection.ip}</TableCell>
               <TableCell className="font-source-code-pro">{connection.port}</TableCell>
               <TableCell align="right">
-                <Switch
+                <Radio
                   checked={connection.connected}
                   onChange={onToggle("connection-" + i)}
                   name={"connection-" + i}

@@ -1,4 +1,3 @@
-  
 body {
   background-color: whitesmoke;
 }
@@ -13,4 +12,18 @@ body {
 
 .font-source-code-pro {
   font-family: "Source Code Pro", monospace !important;
+}
+
+.hex-span {
+  padding: 0px 4px 0px 4px;
+}
+
+.value-span {
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.150s ease-out;
+}
+
+.value-span:hover {
+  background: #FFFFFF50;
 }

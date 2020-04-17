@@ -63,3 +63,10 @@ body {
 .value-span:hover {
   background: #FFFFFF50;
 }
+
+.packet .MuiTableCell-body {
+  color: inherit;
+}
+
+.red { color: red !important; }
+.blue { color: blue !important; }

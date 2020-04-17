@@ -22,7 +22,7 @@ const PacketView = (props) => {
         direction="row"
       >
         {index % 2 ? <div style={{ flexGrow: 1 }}></div> : <></>}
-        <PacketsTable list={packets[index].lines} />
+        <PacketsTable side={index % 2 ? "RIGHT" : "LEFT"} list={packets[index].lines} />
       </Grid>
     </Box>
   );

@@ -14,7 +14,7 @@ export const saveApp = () => async (dispatch, getState) => {
   const store = { proxy };
 
   // Save to JSON file
-  saveFile(JSON.stringify(store), `SAVED_STORE__${moment().format("YYYY_MM_DD__hh_mm")}.json`);
+  saveFile(JSON.stringify(store), `SESSION_${moment().format("YYYYMMDD_hhmm")}.json`);
 
   dispatch({ type: TYPE.SAVE_STORE, payload: {} });
 };

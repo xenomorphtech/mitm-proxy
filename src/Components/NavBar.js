@@ -12,12 +12,11 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SaveIcon from '@material-ui/icons/Save';
 import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 import ClearIcon from '@material-ui/icons/Clear';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid, InputBase } from "@material-ui/core";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid, InputBase, Tooltip } from "@material-ui/core";
 
 import { LINKS } from "../Constants/Roles";
 import { connect } from "react-redux";
 import { resetUser } from "./../Redux/Actions/Auth";
-import { resetUserDetails } from "../Utils/LocalStorage";
 
 import { resetApp, saveApp } from "../Redux/Actions/App";
 import { showLoading, hideLoading } from "../Redux/Actions/Page";
@@ -157,7 +156,7 @@ const NavBar = (props) => {
 
   const saveStore = () => saveApp();
 
-  const resetStore = () => resetApp(sampleStore);
+  const resetStore = () => { hideLoading(); resetApp(sampleStore); };
 
   const handleFileChange = ({ target: { files } }) => {
     showLoading();
@@ -193,7 +192,7 @@ const NavBar = (props) => {
     {
       badgeCount: 0,
       icon: <OpenInBrowserIcon />,
-      label: "Upload",
+      label: "Upload Session",
       onClick: openFilePicker
     }
   ];
@@ -212,12 +211,15 @@ const NavBar = (props) => {
   ];
 
   const makeNavBarItems = (items, isMobile) => items.map(({ onClick, badgeCount = 0, icon, label }) => {
-    const view = <>
+    const button = (
       <IconButton onClick={onClick} color="inherit">
         <Badge badgeContent={badgeCount} color="secondary">
           {icon}
         </Badge>
       </IconButton>
+    );
+    const view = <>
+      {isMobile ? button : <Tooltip title={label}>{button}</Tooltip>}
       {isMobile ? <p>{label}</p> : <></>}
     </>;
     return isMobile ? <MenuItem>{view}</MenuItem> : view;

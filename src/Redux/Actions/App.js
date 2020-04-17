@@ -3,16 +3,18 @@ import moment from "moment";
 import TYPE from "../Types/App";
 import { saveFile } from "../../Utils/File";
 
-export const resetApp = (data) => (dispatch) => {
-  dispatch({ type: TYPE.SET_STORE, payload: data });
+export const resetApp = (data) => (dispatch, getState) => {
+  const store = { ...getState() };
+  store.proxy = { ...data.proxy };
+  dispatch({ type: TYPE.SET_STORE, payload: store });
 };
 
 export const saveApp = () => async (dispatch, getState) => {
-  const store = getState();
-  delete store._persist;
+  const proxy = { ...getState().proxy };
+  const store = { proxy };
 
   // Save to JSON file
-  saveFile(JSON.stringify(store), `SAVED-STORE-${moment().format("DD-MM-YYYY")}.json`);
+  saveFile(JSON.stringify(store), `SAVED_STORE__${moment().format("YYYY_MM_DD__hh_mm")}.json`);
 
   dispatch({ type: TYPE.SAVE_STORE, payload: {} });
 };

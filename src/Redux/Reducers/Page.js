@@ -18,8 +18,12 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, backdrop: payload };
 
     case TYPE.HIDE_BACKDROP:
-      return { ...state, backdrop: payload };
-
+      if(payload.hasOwnProperty("count")){
+        return { ...state, backdrop: payload.count < 0 ? { count: 0 } : payload };
+      } else {
+        return { ...state, backdrop: payload };
+      }
+      break;
     default:
       return state;
   }

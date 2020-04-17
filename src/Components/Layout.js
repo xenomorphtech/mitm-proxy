@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { isEmpty } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Snackbar, Grow, Backdrop, CircularProgress } from "@material-ui/core";
@@ -12,7 +11,6 @@ import { hideSnackbar } from "../Redux/Actions/Page";
 import "typeface-source-code-pro";
 import "typeface-roboto";
 
-import { getUserDetails } from "../Utils/LocalStorage";
 import { setUser } from "../Redux/Actions/Auth";
 
 
@@ -31,18 +29,6 @@ const Layout = (props) => {
   const { history, user, setUser, snackbar, backdrop, hideSnackbar } = props;
 
   const { role, title, navbar = true } = props;
-
-  useEffect(() => {
-    const userDetails = getUserDetails();
-    if (!isEmpty(userDetails)) {
-      setUser(userDetails);
-      if(history.location.pathname === "/"){
-        history.push("/dashboard");
-      }
-    } else {
-      history.push("/");
-    }
-  }, []);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {

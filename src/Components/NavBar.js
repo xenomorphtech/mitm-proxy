@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { isEmpty } from "lodash";
 import clsx from "clsx";
 import { withRouter } from "react-router-dom";
 
@@ -8,12 +9,19 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { ChevronRight, ChevronLeft, Mail, Notifications, AccountCircle, More, ExitToApp } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid } from "@material-ui/core";
+import SaveIcon from '@material-ui/icons/Save';
+import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
+import ClearIcon from '@material-ui/icons/Clear';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid, InputBase } from "@material-ui/core";
 
 import { LINKS } from "../Constants/Roles";
 import { connect } from "react-redux";
 import { resetUser } from "./../Redux/Actions/Auth";
 import { resetUserDetails } from "../Utils/LocalStorage";
+
+import { resetApp, saveApp } from "../Redux/Actions/App";
+import { showLoading, hideLoading } from "../Redux/Actions/Page";
+import { sampleStore } from "../__Mocks__/Data/File";
 
 const drawerWidth = 240;
 
@@ -91,6 +99,8 @@ const NavBar = (props) => {
   const classes = useStyles();
   const theme = useTheme();
 
+  const { resetApp, saveApp, showLoading, hideLoading } = props;
+
   const { history, user, resetUser } = props;
   const { title, role } = props;
 
@@ -136,23 +146,55 @@ const NavBar = (props) => {
   const handleLogOut = (e) => {
     handleMenuClose();
     // resetting localStorage
-    resetUserDetails();
+    // resetUserDetails();
     // resetting ReduxStore
     resetUser();
     // routing to Login Page
     history.push("/");
   };
 
+  const openFilePicker = () => window["file_upload"].click();
+
+  const saveStore = () => saveApp();
+
+  const resetStore = () => resetApp(sampleStore);
+
+  const handleFileChange = ({ target: { files } }) => {
+    showLoading();
+    if (!isEmpty(files)) {
+      const file = files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = (event) => {
+        if (event.target.readyState == FileReader.DONE) { // DONE == 2
+          resetApp(JSON.parse(event.target.result));
+          hideLoading();
+        }
+      };
+
+      const blob = file.slice(0, file.size);
+      reader.readAsBinaryString(blob);
+    } else {
+      hideLoading();
+    }
+  }
+
   const navBarItems = [
     {
-      badgeCount: 4,
-      icon: <Mail />,
-      label: "Mail"
+      icon: <ClearIcon />,
+      label: "Clear Session",
+      onClick: resetStore
     },
     {
-      badgeCount: 8,
-      icon: <Notifications />,
-      label: "Notifications"
+      icon: <SaveIcon />,
+      label: "Save Session",
+      onClick: saveStore
+    },
+    {
+      badgeCount: 0,
+      icon: <OpenInBrowserIcon />,
+      label: "Upload",
+      onClick: openFilePicker
     }
   ];
 
@@ -169,9 +211,9 @@ const NavBar = (props) => {
     }
   ];
 
-  const makeNavBarItems = (items, isMobile) => items.map(({ badgeCount, icon, label }) => {
+  const makeNavBarItems = (items, isMobile) => items.map(({ onClick, badgeCount = 0, icon, label }) => {
     const view = <>
-      <IconButton aria-label="show 4 new mails" color="inherit">
+      <IconButton onClick={onClick} color="inherit">
         <Badge badgeContent={badgeCount} color="secondary">
           {icon}
         </Badge>
@@ -184,13 +226,13 @@ const NavBar = (props) => {
   const makeMenuItems = (items, isMobile) => items.map(({ onClick, label, icon }) => {
     const view = isMobile ? <>
       <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-          children={icon}
+        aria-label="account of current user"
+        aria-controls="primary-search-account-menu"
+        aria-haspopup="true"
+        color="inherit"
+        children={icon}
       />
-        <p>{label}</p>
+      <p>{label}</p>
     </> : label;
     return <MenuItem onClick={onClick}>{view}</MenuItem>;
   });
@@ -251,11 +293,17 @@ const NavBar = (props) => {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <InputBase
+              type="file"
+              id="file_upload"
+              style={{ display: "none" }}
+              multiple="false"
+              onChange={handleFileChange}
+            />
             {makeNavBarItems(navBarItems, false)}
             {user ? <IconButton
               edge="end"
               aria-label="account of current user"
-              // aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -266,7 +314,6 @@ const NavBar = (props) => {
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
-              // aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
               color="inherit"
@@ -310,5 +357,9 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  resetUser
+  resetUser,
+  showLoading,
+  hideLoading,
+  resetApp,
+  saveApp
 })(withRouter(NavBar));

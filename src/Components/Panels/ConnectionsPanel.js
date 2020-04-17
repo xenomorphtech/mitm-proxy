@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { isEmpty } from "lodash";
 
 import { Box } from "@material-ui/core";
 
@@ -11,7 +12,9 @@ const ConnectionsPanel = (props) => {
   const [connections, setConnections] = useState(props.connections);
 
   useEffect(() => {
-    props.getConnections();
+    if(isEmpty(connections)){
+      props.getConnections();
+    }
   }, []);
 
   useEffect(() => {
@@ -28,12 +31,9 @@ const ConnectionsPanel = (props) => {
         connection.connected = false;
       }
     });
+    props.getPackets();
     setConnections(updatedConnections);
   };
-
-  useEffect(() => {
-    props.getPackets();
-  }, [connections]);
 
   return (
     <Panel heading="Connections">

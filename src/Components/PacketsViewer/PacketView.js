@@ -13,23 +13,10 @@ const PacketView = (props) => {
   const [open, setOpen] = useState(false);
   const [notes, setNotes] = useState("");
 
-  // const onClickNotes = (i) => () => {
-  //   setOpen(true);
-  // };
-
   const getRowHeight = ({ index }) => packets[index].size;
 
   const rowRenderer = ({ index, key, style }) => (
-    <Box p={2} key={key} style={style} className="packet">
-      {/* <Grid
-        container
-        direction="row"
-        alignItems="center"
-      >
-        <Typography variant="caption">Packet size : {packets[index].len}</Typography>
-        <div style={{ flexGrow: 1 }}></div>
-        <IconButton onClick={onClickNotes(index)}><Notes /></IconButton>
-      </Grid> */}
+    <Box p={1} key={key} style={style} className="packet">
       <Grid
         container
         direction="row"
@@ -37,8 +24,6 @@ const PacketView = (props) => {
         {index % 2 ? <div style={{ flexGrow: 1 }}></div> : <></>}
         <PacketsTable list={packets[index].lines} />
       </Grid>
-      {/* <br /> */}
-      {/* <br /> */}
     </Box>
   );
 

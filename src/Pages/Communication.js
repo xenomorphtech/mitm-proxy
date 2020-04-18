@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Grid } from "@material-ui/core";
 
-import Layout from "../Components/Layout";
-import Chat from "../Components/Communication/Chat";
+import Layout from "./../Components/Common/Layout";
+import Chat from "./../Components/Communication/Chat";
 
-import { USER } from "../Constants/Roles";
-import M from "../__Mocks__/Data/Communication";
+import { USER } from "./../Constants/Roles";
+import M from "./../__Mocks__/Data/Communication";
 import Faker from "faker";
 
 const useStyles = makeStyles((theme) => ({

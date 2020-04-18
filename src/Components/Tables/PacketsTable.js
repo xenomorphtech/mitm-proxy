@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Switch, Paper } from "@material-ui/core";
 
-import C from "../../Utils/Conversion";
-import ChunkHex from "../HexEditor/ChunkHex";
+import C from "./../../Utils/Conversion";
+import ChunkHex from "./../HexEditor/ChunkHex";
 import AsciiView from '../PacketsViewer/AsciiView';
 
 

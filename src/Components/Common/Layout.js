@@ -4,17 +4,20 @@ import { withRouter } from "react-router-dom";
 import { isEmpty } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Snackbar, Grow, Backdrop, CircularProgress } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
+import Grow from "@material-ui/core/Grow";
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import NavBar from "./Common/NavBar";
-import { hideSnackbar } from "./../Redux/Actions/Page";
+import NavBar from "./NavBar";
+import { hideSnackbar } from "./../../Redux/Actions/Page";
 
 import "typeface-source-code-pro";
 import "typeface-roboto";
 
-import { resetUser } from "./../Redux/Actions/Auth";
-import { setStore, saveStore } from "./../Redux/Actions/App";
-import { showLoading, hideLoading } from "./../Redux/Actions/Page";
+import { resetUser } from "./../../Redux/Actions/Auth";
+import { setStore, saveStore } from "./../../Redux/Actions/App";
+import { showLoading, hideLoading } from "./../../Redux/Actions/Page";
 
 
 const useStyles = makeStyles(theme => ({

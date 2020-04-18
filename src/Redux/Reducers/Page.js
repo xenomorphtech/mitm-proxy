@@ -1,4 +1,4 @@
-import TYPE from "../Types/Page";
+import TYPE from "./../Types/Page";
 
 const initialState = {
   snackbar: undefined,

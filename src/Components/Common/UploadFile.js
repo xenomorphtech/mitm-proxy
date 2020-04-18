@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { isEmpty } from "lodash";
 
-import { SESSION_UPLOAD_NODE_ID } from "../../Constants/Misc";
+import { SESSION_UPLOAD_NODE_ID } from "./../../Constants/Misc";
 
 const UploadFile = (props) => {
   const {

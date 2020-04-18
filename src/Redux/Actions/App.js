@@ -1,8 +1,8 @@
 import moment from "moment";
 
-import TYPE from "../Types/App";
-import TYPE_PAGE from "../Types/Page";
-import { saveFile } from "../../Utils/File";
+import TYPE from "./../Types/App";
+import TYPE_PAGE from "./../Types/Page";
+import { saveFile } from "./../../Utils/File";
 
 export const setStore = (data) => (dispatch, getState) => {
   const store = { ...getState() };

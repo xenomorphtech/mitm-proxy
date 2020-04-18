@@ -7,14 +7,14 @@ import { Box, Grid } from "@material-ui/core";
 import ChevronRight from "@material-ui/icons/ChevronRight";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 
-import Layout from "../Components/Layout";
-import DataInspectorPanel from "../Components/Panels/DataInspectorPanel";
-import ConnectionsPanel from "../Components/Panels/ConnectionsPanel";
+import Layout from "./../Components/Common/Layout";
+import DataInspectorPanel from "./../Components/Panels/DataInspectorPanel";
+import ConnectionsPanel from "./../Components/Panels/ConnectionsPanel";
 
-import { USER } from "../Constants/Roles";
-import { data } from "../__Mocks__/Data/Tree";
-import PacketView from "../Components/PacketsViewer/PacketView";
-import TreePanel from "../Components/Panels/TreePanel";
+import { USER } from "./../Constants/Roles";
+import { data } from "./../__Mocks__/Data/Tree";
+import PacketView from "./../Components/PacketsViewer/PacketView";
+import TreePanel from "./../Components/Panels/TreePanel";
 
 const useStyles = makeStyles((theme) => ({
   grow: {

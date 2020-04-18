@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import TYPE from "../Types/App";
+import TYPE from "./../Types/App";
 
 import page from './Page';
 import hexCode from './HexCode';

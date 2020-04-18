@@ -1,9 +1,9 @@
 import React from "react";
-import Panel from "../Panel";
+import Panel from "./../Common/Panel";
 import { TextField, Box } from "@material-ui/core";
-import BinaryView from "../HexEditor/BinaryView";
+import BinaryView from "./../HexEditor/BinaryView";
 import { connect } from "react-redux";
-import { setHexCode } from "../../Redux/Actions/HexCode";
+import { setHexCode } from "./../../Redux/Actions/HexCode";
 
 const DataInspectorPanel = (props) => {
   const { hexCode, setHexCode } = props;

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { isEmpty } from "lodash";
+import { connect } from "react-redux";
 
 import { Box } from "@material-ui/core";
 
-import Panel from "../Panel";
-import ConnectionsTable from "../Tables/ConnectionsTable";
-import { getConnections, getPackets } from "../../Redux/Actions/Proxy";
-import { connect } from "react-redux";
+import Panel from "./../Common/Panel";
+import ConnectionsTable from "./../Tables/ConnectionsTable";
+
+import { getConnections, getPackets } from "./../../Redux/Actions/Proxy";
 
 const ConnectionsPanel = (props) => {
   const [connections, setConnections] = useState(props.connections);

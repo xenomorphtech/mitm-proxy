@@ -1,6 +1,6 @@
-import TYPE from "../Types/Auth";
-import TYPE_PAGE from "../Types/Page";
-import { logInAPI, signUpAPI } from "../../Api/Auth";
+import TYPE from "./../Types/Auth";
+import TYPE_PAGE from "./../Types/Page";
+import { logInAPI, signUpAPI } from "./../../Api/Auth";
 
 const makeAction = (api, successType, failureType) => (payload) => async (dispatch, getState) => {
   dispatch({ type: TYPE_PAGE.SHOW_BACKDROP, payload: { count: ++getState().page.backdrop.count } });

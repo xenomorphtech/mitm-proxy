@@ -9,8 +9,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import SaveIcon from "@material-ui/icons/Save";
 import OpenInBrowserIcon from "@material-ui/icons/OpenInBrowser";
 import ClearIcon from "@material-ui/icons/Clear";
-import { sampleStore } from "../../../__Mocks__/Data/File";
-import { SESSION_UPLOAD_NODE_ID } from "../../../Constants/Misc";
+import { sampleStore } from "./../../../__Mocks__/Data/File";
+import { SESSION_UPLOAD_NODE_ID } from "./../../../Constants/Misc";
 
 const NavBarItems = (props) => {
 

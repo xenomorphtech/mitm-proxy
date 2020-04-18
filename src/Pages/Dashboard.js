@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = (props) => {
+
   const { proxy: { packets } } = props;
   const classes = useStyles();
 
@@ -61,7 +62,7 @@ const Dashboard = (props) => {
               <ConnectionsPanel />
               <DataInspectorPanel
                 hexCode={hexCode}
-                setHexCode={setHexCode}
+              // setHexCode={setHexCode}
               />
               <TreePanel
                 data={data}

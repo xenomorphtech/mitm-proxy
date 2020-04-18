@@ -22,7 +22,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (!isEmpty(user)) {
-      setUserDetails(user);
+      // setUserDetails(user);
       history.push("/dashboard");
     }
   }, [user]);

@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import { withRouter } from "react-router-dom";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { ChevronRight, ChevronLeft, Mail, Notifications, AccountCircle, More, ExitToApp } from "@material-ui/icons";
+import { ChevronRight, ChevronLeft, AccountCircle, More } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid } from "@material-ui/core";
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, CssBaseline, Divider, Badge, IconButton, Menu, MenuItem, Box, Grid, InputBase, Tooltip } from "@material-ui/core";
 
-import { LINKS } from "../Constants/Roles";
-import { connect } from "react-redux";
-import { resetUser } from "./../Redux/Actions/Auth";
-import { resetUserDetails } from "../Utils/LocalStorage";
+import { LINKS } from "./../../../Constants/Roles";
+import NavBarItems from "./NavBarItems";
+import UploadFile from "./../UploadFile";
+import MenuItems from "./MenuItems";
 
-const drawerWidth = 240;
+import { DRAWER_WIDTH } from "./../../../Constants/Misc";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -29,8 +28,8 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: DRAWER_WIDTH,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -43,12 +42,12 @@ const useStyles = makeStyles(theme => ({
     display: "none",
   },
   drawer: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     flexShrink: 0,
     whiteSpace: "nowrap",
   },
   drawerOpen: {
-    width: drawerWidth,
+    width: DRAWER_WIDTH,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -91,7 +90,8 @@ const NavBar = (props) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const { history, user, resetUser } = props;
+  const { resetUser, setStore, saveStore, showLoading, hideLoading } = props;
+  const { history, user } = props;
   const { title, role } = props;
 
   const [open, setOpen] = useState(false);
@@ -116,16 +116,16 @@ const NavBar = (props) => {
     ))
   );
 
-  const handleMenuClose = (e) => {
+  const handleMenuClose = (_event) => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
 
-  const handleProfileMenuOpen = (e) => {
-    setAnchorEl(e.currentTarget);
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = (e) => {
+  const handleMobileMenuClose = (_event) => {
     setMobileMoreAnchorEl(null);
   };
 
@@ -133,67 +133,10 @@ const NavBar = (props) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handleLogOut = (e) => {
+  const handleLogOut = (_event) => {
     handleMenuClose();
-    // resetting localStorage
-    resetUserDetails();
-    // resetting ReduxStore
     resetUser();
-    // routing to Login Page
-    history.push("/");
   };
-
-  const navBarItems = [
-    {
-      badgeCount: 4,
-      icon: <Mail />,
-      label: "Mail"
-    },
-    {
-      badgeCount: 8,
-      icon: <Notifications />,
-      label: "Notifications"
-    }
-  ];
-
-  const menuItems = [
-    {
-      onClick: () => ({}),
-      icon: <AccountCircle />,
-      label: "Profile"
-    },
-    {
-      onClick: handleLogOut,
-      icon: <ExitToApp />,
-      label: "Log Out"
-    }
-  ];
-
-  const makeNavBarItems = (items, isMobile) => items.map(({ badgeCount, icon, label }) => {
-    const view = <>
-      <IconButton aria-label="show 4 new mails" color="inherit">
-        <Badge badgeContent={badgeCount} color="secondary">
-          {icon}
-        </Badge>
-      </IconButton>
-      {isMobile ? <p>{label}</p> : <></>}
-    </>;
-    return isMobile ? <MenuItem>{view}</MenuItem> : view;
-  });
-
-  const makeMenuItems = (items, isMobile) => items.map(({ onClick, label, icon }) => {
-    const view = isMobile ? <>
-      <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-          children={icon}
-      />
-        <p>{label}</p>
-    </> : label;
-    return <MenuItem onClick={onClick}>{view}</MenuItem>;
-  });
 
   const renderMenu = (
     <Menu
@@ -205,7 +148,7 @@ const NavBar = (props) => {
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
     >
-      {makeMenuItems(menuItems, false)}
+      <MenuItems isMobile={false} handleLogOut={handleLogOut}/>
     </Menu>
   );
 
@@ -219,8 +162,14 @@ const NavBar = (props) => {
       open={Boolean(mobileMoreAnchorEl)}
       onClose={handleMobileMenuClose}
     >
-      {makeNavBarItems(navBarItems, true)}
-      {user ? makeMenuItems(menuItems, true) : <></>}
+      <NavBarItems
+        isMobile={true}
+        setStore={setStore}
+        saveStore={saveStore}
+      />
+      {user ?
+        <MenuItems isMobile={true} handleLogOut={handleLogOut} />
+        : <></>}
     </Menu>
   );
 
@@ -246,16 +195,22 @@ const NavBar = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            {title}
-          </Typography>
+          <Typography variant="h6" noWrap>{title}</Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {makeNavBarItems(navBarItems, false)}
+            <UploadFile
+              showLoading={showLoading}
+              hideLoading={hideLoading}
+              setStore={setStore}
+            />
+            <NavBarItems
+              isMobile={false}
+              setStore={setStore}
+              saveStore={saveStore}
+            />
             {user ? <IconButton
               edge="end"
               aria-label="account of current user"
-              // aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -266,7 +221,6 @@ const NavBar = (props) => {
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
-              // aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
               color="inherit"
@@ -295,20 +249,12 @@ const NavBar = (props) => {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {sideList}
-        </List>
+        <List>{sideList}</List>
       </Drawer>
-      {renderMenu}
+      {user ? <>{renderMenu}</> : <></>}
       {renderMobileMenu}
     </>
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.auth.user
-});
-
-export default connect(mapStateToProps, {
-  resetUser
-})(withRouter(NavBar));
+export default NavBar;

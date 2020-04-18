@@ -1,5 +1,4 @@
 import TYPE from "../Types/Proxy";
-import { connections } from "../../__Mocks__/Data/Connection";
 
 const initialState = {
   packets: [],

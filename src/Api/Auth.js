@@ -1,5 +1,5 @@
-import { API, HOST, ORIGIN, SERVICES, BACKEND_ENDPOINTS } from "../Config";
-import { version } from "../../package.json";
+import { API, HOST, ORIGIN, SERVICES, BACKEND_ENDPOINTS } from "./../Config";
+import { version } from "./../../package.json";
 
 let defaultHeaders = {
   "Accept": "application/json, text/plain, */*",

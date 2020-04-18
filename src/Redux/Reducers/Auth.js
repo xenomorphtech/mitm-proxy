@@ -1,4 +1,4 @@
-import TYPE from "../Types/Auth";
+import TYPE from "./../Types/Auth";
 
 const initialState = {
   user: null,

@@ -7,12 +7,12 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { Typography, Box } from "@material-ui/core";
 
-import Layout from "../Components/Layout";
-import Tabs from "../Components/Tabs";
-import LogInView from "../Components/Partials/LogInView";
-import SignUpView from "../Components/Partials/SignUpView";
+import Layout from "./../Components/Common/Layout";
+import Tabs from "./../Components/Common/Tabs";
+import LogInView from "./../Components/Partials/LogInView";
+import SignUpView from "./../Components/Partials/SignUpView";
 
-import { setUserDetails } from "../Utils/LocalStorage";
+import { setUserDetails } from "./../Utils/LocalStorage";
 
 const Login = (props) => {
   const {
@@ -22,7 +22,7 @@ const Login = (props) => {
 
   useEffect(() => {
     if (!isEmpty(user)) {
-      setUserDetails(user);
+      // setUserDetails(user);
       history.push("/dashboard");
     }
   }, [user]);

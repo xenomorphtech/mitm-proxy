@@ -4,7 +4,7 @@ import Box from "@material-ui/core/Box";
 import TreeView from "@material-ui/lab/TreeView";
 import TreeItem from "@material-ui/lab/TreeItem";
 
-import Panel from "../Panel";
+import Panel from "./../Common/Panel";
 
 const TreePanel = (props) => {
 

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { Grid, TextField, Button } from "@material-ui/core";
 
-import { logIn } from "../../Redux/Actions/Auth";
+import { logIn } from "./../../Redux/Actions/Auth";
 
 const initForm = {
   username: {

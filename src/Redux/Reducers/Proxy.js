@@ -1,4 +1,4 @@
-import TYPE from "../Types/Proxy";
+import TYPE from "./../Types/Proxy";
 
 const initialState = {
   packets: [],

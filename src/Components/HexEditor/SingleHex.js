@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { setHexCode } from "../../Redux/Actions/HexCode";
+import { setHexCode } from "./../../Redux/Actions/HexCode";
 
 const SingleHex = (props) => {
 

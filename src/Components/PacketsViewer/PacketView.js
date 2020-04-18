@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { Notes } from "@material-ui/icons";
 import { Box, Grid, Paper, Typography, IconButton } from "@material-ui/core";
 
-import PacketNotes from "../Modals/PacketNotes";
-import PacketsTable from "../Tables/PacketsTable";
-import Virtualized from "../Virtualized";
+import PacketNotes from "./../Modals/PacketNotes";
+import PacketsTable from "./../Tables/PacketsTable";
+import Virtualized from "./../Common/Virtualized";
 
 const PacketView = (props) => {
   const { packets } = props;

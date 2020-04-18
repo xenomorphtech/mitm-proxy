@@ -1,61 +1,46 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Switch } from "@material-ui/core";
 
-import C from "../../Utils/Conversion";
-import ChunkHex from "../HexEditor/ChunkHex";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Switch, Paper } from "@material-ui/core";
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: "660px",
-  },
-  packetsCell: {
-    padding: "0px 0px 0px 0px",
-    width: "420px",
-    maxWidth: "420px",
-    minWidth: "420px"
-  },
-  addressCell: {
-    padding: "0px 0px 0px 0px",
-    width: "100px",
-    maxWidth: "100px",
-    minWidth: "100px"
-  },
-  asciiCell: {
-    padding: "0px 0px 0px 0px",
-    width: "140px",
-    maxWidth: "140px",
-    minWidth: "140px"
-  }
-});
+import C from "./../../Utils/Conversion";
+import ChunkHex from "./../HexEditor/ChunkHex";
+import AsciiView from '../PacketsViewer/AsciiView';
+
 
 const PacketsTable = (props) => {
-  const { list } = props;
-  const classes = useStyles();
+  const { list, side } = props;
 
   const makeAddressStr = (i) => "0x" + "0".repeat(8 - String(i * 10).length) + i * 10;
 
   return (
-    <TableContainer>
-      <Table className={classes.table} size="small" aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {list.map((line, i) => (
-            <TableRow key={i}>
-              <TableCell align="left" className={classes.addressCell + " font-source-code-pro"}>{makeAddressStr(i)}</TableCell>
-              <TableCell align="left" className={classes.packetsCell + " font-source-code-pro"}><ChunkHex chunk={line.match(/.{1,2}/g)}/></TableCell>
-              <TableCell align="left" className={classes.asciiCell + " font-source-code-pro"}>{C.hexToAscii(line).replace(/ /g, ".")}</TableCell>
+    <Paper elevation={0} variant="outlined">
+      <TableContainer style={{ width: "unset" }}>
+        <Table size="small" aria-label="packets table">
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ padding: "0px 0px 0px 0px" }}></TableCell>
+              <TableCell style={{ padding: "0px 0px 0px 0px" }}></TableCell>
+              <TableCell style={{ padding: "0px 0px 0px 0px" }}></TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {list.map((line, i) => (
+              <TableRow key={i} className={side === "LEFT" ? "red" : "blue"}>
+                <TableCell align="left" className="address-cell font-source-code-pro">
+                  {makeAddressStr(i)}
+                </TableCell>
+                <TableCell align="left" className="packets-cell font-source-code-pro">
+                  <ChunkHex chunk={line.match(/.{1,2}/g)} />
+                </TableCell>
+                <TableCell align="left" className="ascii-cell font-source-code-pro">
+                  <AsciiView ascii={C.replaceNonAscii(C.hexToAscii(line))} />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 

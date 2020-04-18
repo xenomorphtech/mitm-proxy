@@ -1,0 +1,1 @@
+export const sampleStore = JSON.parse(`{"hexCode":{"selectedHexCode":"A0"},"proxy":{"packets":[],"connections":[]},"auth":{"user":{}},"page":{"backdrop":{"count":0}}}`);

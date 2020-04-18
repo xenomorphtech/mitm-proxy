@@ -1,4 +1,4 @@
-import TYPE from "../Types/HexCode";
+import TYPE from "./../Types/HexCode";
 
 const initialState = {
   selectedHexCode: "00"

@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { isEmpty } from "lodash";
+import { connect } from "react-redux";
 
 import { Box } from "@material-ui/core";
 
-import Panel from "../Panel";
-import ConnectionsTable from "../Tables/ConnectionsTable";
+import Panel from "./../Common/Panel";
+import ConnectionsTable from "./../Tables/ConnectionsTable";
+
+import { getConnections, getPackets } from "./../../Redux/Actions/Proxy";
 
 const ConnectionsPanel = (props) => {
-  const [connections, setConnections] = useState(props.connections || []);
+  const [connections, setConnections] = useState(props.connections);
 
-  const onToggle = (name) => ({ target: { checked } }) => {
+  useEffect(() => {
+    if(isEmpty(connections)){
+      props.getConnections();
+    }
+  }, []);
+
+  useEffect(() => {
+    setConnections(props.connections);
+  },[props.connections]);
+
+  const onToggle = (name) => (event) => {
+    const { target: { checked } } = event;
     const updatedConnections = [...connections];
     updatedConnections.forEach((connection, i) => {
       if ("connection-" + i === name) {
         connection.connected = checked;
+      } else {
+        connection.connected = false;
       }
     });
+    props.getPackets();
     setConnections(updatedConnections);
   };
 
@@ -30,4 +48,11 @@ const ConnectionsPanel = (props) => {
   );
 };
 
-export default ConnectionsPanel;
+const mapStateToProps = (state) => ({
+  connections: state.proxy.connections
+});
+
+export default connect(mapStateToProps, {
+  getPackets,
+  getConnections
+})(ConnectionsPanel);

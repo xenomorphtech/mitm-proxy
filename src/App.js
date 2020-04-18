@@ -5,7 +5,8 @@ import {
   Route,
 } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./Redux";
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { store, persistor } from "./Redux";
 import "./App.css";
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -16,7 +17,7 @@ import Login from "./Pages/Login";
 
 const App = () => {
 
-  const prefersDarkMode = true;
+  const prefersDarkMode = false;
 
   const theme = useMemo(() => {
     return createMuiTheme({
@@ -28,15 +29,17 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            <Route exact path="/" children={<Login />} />
-            <Route exact path="/dashboard" children={<Dashboard />} />
-            <Route exact path="/communication" children={<Communication />} />
-          </Switch>
-        </Router>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Switch>
+              <Route exact path="/" children={<Login />} />
+              <Route exact path="/dashboard" children={<Dashboard />} />
+              <Route exact path="/communication" children={<Communication />} />
+            </Switch>
+          </Router>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 }

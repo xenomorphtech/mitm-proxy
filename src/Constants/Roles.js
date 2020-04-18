@@ -1,5 +1,7 @@
 import React from "react";
-import { Dashboard, Forum } from "@material-ui/icons";
+
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import ForumIcon from "@material-ui/icons/Forum";
 
 export const CREATE = "Add";
 export const UPDATE = "Edit";
@@ -10,7 +12,7 @@ export const LINKS = [
   {
     label: "Dashboard",
     href: "/dashboard",
-    icon: <Dashboard />,
+    icon: <DashboardIcon />,
     roles: [USER],
     show: {
       header: false,
@@ -20,7 +22,7 @@ export const LINKS = [
   {
     label: "Communication",
     href: "/communication",
-    icon: <Forum />,
+    icon: <ForumIcon />,
     roles: [USER],
     show: {
       header: false,

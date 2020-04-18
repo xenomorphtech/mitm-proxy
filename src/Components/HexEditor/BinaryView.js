@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from "@material-ui/core/styles";
 import { Checkbox, Tooltip, FormControl, FormLabel, Box } from "@material-ui/core";
 
-import C from "../../Utils/Conversion";
+import C from "./../../Utils/Conversion";
 
 const useStyles = makeStyles((theme) => ({
   boxInForm: {

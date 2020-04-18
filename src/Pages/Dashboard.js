@@ -2,16 +2,19 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { packets } from "../__Mocks__/Data/Packets";
 import { Box, Grid } from "@material-ui/core";
 
-import Layout from "../Components/Layout";
-import DataInspectorPanel from "../Components/Panels/DataInspectorPanel";
-import ConnectionsPanel from "../Components/Panels/ConnectionsPanel";
+import ChevronRight from "@material-ui/icons/ChevronRight";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
-import { USER } from "../Constants/Roles";
-import { connections } from "../__Mocks__/Data/Connection";
-import PacketView from "../Components/PacketsViewer/PacketView";
+import Layout from "./../Components/Common/Layout";
+import DataInspectorPanel from "./../Components/Panels/DataInspectorPanel";
+import ConnectionsPanel from "./../Components/Panels/ConnectionsPanel";
+
+import { USER } from "./../Constants/Roles";
+import { data } from "./../__Mocks__/Data/Tree";
+import PacketView from "./../Components/PacketsViewer/PacketView";
+import TreePanel from "./../Components/Panels/TreePanel";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -33,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Dashboard = (props) => {
+
+  const { proxy: { packets } } = props;
   const classes = useStyles();
 
   const { hexCode: { selectedHexCode } } = props;
@@ -54,12 +59,15 @@ const Dashboard = (props) => {
             spacing={1}
           >
             <Grid item xs={12} sm={6} md={4} lg={4}>
-              <ConnectionsPanel
-                connections={connections}
-              />
+              <ConnectionsPanel />
               <DataInspectorPanel
                 hexCode={hexCode}
-                setHexCode={setHexCode}
+              // setHexCode={setHexCode}
+              />
+              <TreePanel
+                data={data}
+                collapseIcon={<ExpandMore />}
+                expandIcon={<ChevronRight />}
               />
             </Grid>
             <Grid item xs={12} sm={6} md={8} lg={8}>
@@ -75,9 +83,9 @@ const Dashboard = (props) => {
 };
 
 const mapStateToProps = state => ({
-  hexCode: state.hexCode
+  hexCode: state.hexCode,
+  proxy: state.proxy
 });
 
 export default connect(mapStateToProps, {
-
 })(Dashboard);

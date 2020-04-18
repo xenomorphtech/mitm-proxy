@@ -1,52 +1,44 @@
 import React, { useState } from "react";
 
 import { Notes } from "@material-ui/icons";
-import { Box, Grid, Paper, Typography, IconButton, makeStyles } from "@material-ui/core";
+import { Box, Grid, Paper, Typography, IconButton } from "@material-ui/core";
 
-import PacketNotes from "../Modals/PacketNotes";
-import PacketsTable from "../Tables/PacketsTable";
-
-const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1
-  },
-  packet: {
-    transition: "background 0.150s ease-in-out",
-    "&:hover": {
-      background: theme.palette.type === "dark" ? "#FFFFFF09" : "#00000009"
-    }
-  }
-}));
+import PacketNotes from "./../Modals/PacketNotes";
+import PacketsTable from "./../Tables/PacketsTable";
+import Virtualized from "./../Common/Virtualized";
 
 const PacketView = (props) => {
-  const classes = useStyles();
   const { packets } = props;
 
   const [open, setOpen] = useState(false);
   const [notes, setNotes] = useState("");
 
-  const onClickNotes = (i) => () => {
-    setOpen(true);
-  };
+  const getRowHeight = ({ index }) => packets[index].size;
+
+  const rowRenderer = ({ index, key, style }) => (
+    <Box p={1} key={key} style={style} className="packet">
+      <Grid
+        container
+        direction="row"
+      >
+        {index % 2 ? <div style={{ flexGrow: 1 }}></div> : <></>}
+        <PacketsTable side={index % 2 ? "RIGHT" : "LEFT"} list={packets[index].lines} />
+      </Grid>
+    </Box>
+  );
+
+  const noOfPackets = packets.length;
 
   return <>
-    <Paper style={{ height: 'calc(100vh - 88px)', overflow: "scroll" }}>
-      {packets.map(({ len, str }, i) => (
-        <Box p={2} className={classes.packet}>
-          <Grid
-            container
-            direction="row"
-            alignItems="center"
-          >
-            <Typography variant="caption">Packet size : {len}</Typography>
-            <div className={classes.grow}></div>
-            <IconButton onClick={onClickNotes(i)}><Notes /></IconButton>
-          </Grid>
-          <PacketsTable list={str.match(/.{1,32}/g) || []} />
-          <br />
-          <br />
-        </Box>
-      ))}
+    <Paper style={{ height: window.innerHeight - 88, overflow: "scroll" }}>
+      <Virtualized
+        dataArray={packets}
+        useDynamicRowHeight={true}
+        rowRenderer={rowRenderer}
+        getRowHeight={getRowHeight}
+        overscan={10}
+        scrollToIndex={noOfPackets - 1}
+      />
     </Paper>
     <PacketNotes
       open={open}

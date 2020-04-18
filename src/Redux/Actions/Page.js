@@ -1,11 +1,11 @@
 import TYPE from '../Types/Page';
 
-export const showLoading = (queries) => (dispatch) => {
-  dispatch({ type: TYPE.SHOW_BACKDROP, payload: queries });
+export const showLoading = () => (dispatch, getState) => {
+  dispatch({ type: TYPE.SHOW_BACKDROP, payload: { count: ++getState().page.backdrop.count } });
 };
 
-export const hideLoading = (queries) => (dispatch) => {
-  dispatch({ type: TYPE.HIDE_BACKDROP, payload: queries });
+export const hideLoading = () => (dispatch, getState) => {
+  dispatch({ type: TYPE.HIDE_BACKDROP, payload: { count: --getState().page.backdrop.count } });
 };
 
 export const showSnackbar = (queries) => (dispatch) => {

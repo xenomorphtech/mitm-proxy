@@ -1,0 +1,5 @@
+export default {
+  SET_STORE: "SET_STORE",
+  SAVE_STORE: "SAVE_STORE",
+  LOAD_STORE: "LOAD_STORE"
+};

@@ -10,17 +10,18 @@ import ConnectionsTable from "./../Tables/ConnectionsTable";
 import { getConnections, getPackets } from "./../../Redux/Actions/Proxy";
 
 const ConnectionsPanel = (props) => {
+  const { hexCode: { selectedHexCode } } = props;
   const [connections, setConnections] = useState(props.connections);
 
   useEffect(() => {
-    if(isEmpty(connections)){
+    if (isEmpty(connections)) {
       props.getConnections();
     }
   }, []);
 
   useEffect(() => {
     setConnections(props.connections);
-  },[props.connections]);
+  }, [props.connections]);
 
   const onToggle = (name) => (event) => {
     const { target: { checked } } = event;
@@ -42,6 +43,7 @@ const ConnectionsPanel = (props) => {
         <ConnectionsTable
           list={connections}
           onToggle={onToggle}
+          selectedHexCode={selectedHexCode}
         />
       </Box>
     </Panel>
@@ -49,7 +51,8 @@ const ConnectionsPanel = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  connections: state.proxy.connections
+  connections: state.proxy.connections,
+  hexCode: state.hexCode
 });
 
 export default connect(mapStateToProps, {

@@ -19,7 +19,7 @@ const Panel = (props) => {
   const classes = useStyles();
 
   return (
-    <ExpansionPanel>
+    <ExpansionPanel expanded={true}>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel-content"

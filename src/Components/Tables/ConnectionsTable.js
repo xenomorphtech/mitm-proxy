@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Radio from "@material-ui/core/Radio";
 import Badge from "@material-ui/core/Badge";
+import WebSockets from '../WebSockets';
 
 const useStyles = makeStyles({
   table: {
@@ -17,10 +18,14 @@ const useStyles = makeStyles({
 });
 
 const ConnectionsTable = (props) => {
-  const { list, onToggle } = props;
+  const { list, onToggle, selectedHexCode } = props;
   const classes = useStyles();
 
-  const onClickRow = ({ connected, live }, i) => () => live ? {} : onToggle("connection-" + i)({ target: { checked: !connected } });
+  const onClickRow = ({ connected, live }, i) => () => {
+    if (!live) {
+      onToggle("connection-" + i)({ target: { checked: !connected } });
+    }
+  };
 
   return (
     <TableContainer>
@@ -34,24 +39,33 @@ const ConnectionsTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {list.map((connection, i) => (
-            <TableRow className="pointer" key={connection.name} onClick={onClickRow(connection, i)}>
+          {list.map(({ connected, name, ip, port, live }, i) => <>
+            {connected ?
+              <WebSockets
+                name={"connection-"+i}
+                data={selectedHexCode}
+                connected={connected}
+                href={`ws://${ip}:${port}`}
+              /> : <></>
+            }
+            <TableRow className="pointer" key={name} onClick={onClickRow({ connected, live }, i)}>
               <TableCell>
-                <Badge color="primary" variant="dot" invisible={connection.live}>
-                  {connection.name} &nbsp;
+                <Badge color="primary" variant="dot" invisible={live}>
+                  {name} &nbsp;
                 </Badge>
               </TableCell>
-              <TableCell className="font-source-code-pro">{connection.ip}</TableCell>
-              <TableCell className="font-source-code-pro">{connection.port}</TableCell>
+              <TableCell className="font-source-code-pro">{ip}</TableCell>
+              <TableCell className="font-source-code-pro">{port}</TableCell>
               <TableCell align="right">
                 <Radio
-                  checked={connection.connected}
+                  checked={connected}
                   name={"connection-" + i}
                   color="primary"
                 />
               </TableCell>
             </TableRow>
-          ))}
+          </>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

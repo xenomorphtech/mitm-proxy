@@ -35,7 +35,6 @@ const WebSockets = (props) => {
   }, []);
 
   // Watches for Data change, if connected then sends data
-  // Sending Data to Server
   useEffect(() => {
     if (ws.readyState === ws.OPEN) {
       ws.send(data);

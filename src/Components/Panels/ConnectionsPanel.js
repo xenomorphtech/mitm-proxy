@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 
-import { Box } from "@material-ui/core";
+import { Box, Button } from "@material-ui/core";
 
 import Panel from "./../Common/Panel";
 import ConnectionsTable from "./../Tables/ConnectionsTable";
@@ -22,6 +22,14 @@ const ConnectionsPanel = (props) => {
   useEffect(() => {
     setConnections(props.connections);
   }, [props.connections]);
+
+  const handleDisconnect = () => {
+    const updatedConnections = [...connections];
+    updatedConnections.forEach((connection, i) => {
+        connection.connected = false;
+    });
+    setConnections(updatedConnections);
+  }
 
   const onToggle = (name) => (event) => {
     const { target: { checked } } = event;
@@ -45,6 +53,16 @@ const ConnectionsPanel = (props) => {
           onToggle={onToggle}
           selectedHexCode={selectedHexCode}
         />
+        <br/>
+        <Button 
+          className="w-100"
+          variant="contained" 
+          disabled={connections.every(({ connected }) => connected === false)}
+          onClick={handleDisconnect}
+          color="primary"
+        >
+          Disconnect
+          </Button>
       </Box>
     </Panel>
   );

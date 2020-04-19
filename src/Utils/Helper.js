@@ -1,4 +1,4 @@
-export const makePacketsFromHex = (hex, quantum = 4, offset =16) => {
+export const makePacketsFromHexString = (hex, quantum = 4, offset =16) => {
 
   const hexStr = hex.replace(/[ \n]/g, "").toUppercase();
 

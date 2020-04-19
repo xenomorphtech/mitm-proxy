@@ -49,7 +49,7 @@ const ConnectionsTable = (props) => {
                 port={port}
               /> : <></>
             }
-            <TableRow className="pointer" key={name} onClick={onClickRow({ connected, live }, i)}>
+            <TableRow className={live ? "" : "pointer"} key={name} onClick={onClickRow({ connected, live }, i)}>
               <TableCell>
                 <Badge color="primary" variant="dot" invisible={live}>
                   {name} &nbsp;

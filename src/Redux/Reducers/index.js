@@ -6,6 +6,7 @@ import page from './Page';
 import hexCode from './HexCode';
 import auth from './Auth';
 import proxy from './Proxy';
+import socket from './Socket';
 
 
 // Combine all reducers.
@@ -13,7 +14,8 @@ const appReducer = combineReducers({
   page,
   hexCode,
   auth,
-  proxy
+  proxy,
+  socket
 });
 
 const rootReducer = (state, action) => {

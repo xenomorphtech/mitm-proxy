@@ -33,19 +33,20 @@ const ConnectionsTable = (props) => {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>IP Address</TableCell>
+            <TableCell>Host</TableCell>
             <TableCell>Port</TableCell>
             <TableCell align="right">Toggle</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {list.map(({ connected, name, ip, port, live }, i) => <>
+          {list.map(({ connected, name, host, port, live }, i) => <>
             {connected ?
               <WebSockets
-                name={"connection-"+i}
+                name={name}
                 data={selectedHexCode}
                 connected={connected}
-                href={`ws://${ip}:${port}`}
+                host={host}
+                port={port}
               /> : <></>
             }
             <TableRow className="pointer" key={name} onClick={onClickRow({ connected, live }, i)}>
@@ -54,7 +55,7 @@ const ConnectionsTable = (props) => {
                   {name} &nbsp;
                 </Badge>
               </TableCell>
-              <TableCell className="font-source-code-pro">{ip}</TableCell>
+              <TableCell className="font-source-code-pro">{host}</TableCell>
               <TableCell className="font-source-code-pro">{port}</TableCell>
               <TableCell align="right">
                 <Radio

@@ -1,19 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+
+import { setSocketData } from "./../Redux/Actions/Socket";
 
 const WebSockets = (props) => {
 
-  const { href, data, name } = props;
+  const { setSocketData } = props;
+  const { host, port, data, name } = props;
+
+  const href = `${host.replace(/^http/, "ws")}:${port}`;
 
   const [ws, setWs] = useState(new WebSocket(href));
 
   useEffect(() => {
 
+    // Capturing Connection Event
     ws.onopen = () => {
       console.log("Connected to Server");
     };
 
+    // Capturing Message Event
     ws.onmessage = (event) => {
       console.log("Message from Server:", event.data);
+      setSocketData(event.data);
     };
 
     setWs(ws);
@@ -25,6 +34,8 @@ const WebSockets = (props) => {
     };
   }, []);
 
+  // Watches for Data change, if connected then sends data
+  // Sending Data to Server
   useEffect(() => {
     if (ws.readyState === ws.OPEN) {
       ws.send(data);
@@ -34,4 +45,8 @@ const WebSockets = (props) => {
   return <></>;
 };
 
-export default WebSockets;
+const mapStateToProps = _state => ({});
+
+export default connect(mapStateToProps, {
+  setSocketData
+})(WebSockets);

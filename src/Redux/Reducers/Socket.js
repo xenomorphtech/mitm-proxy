@@ -1,7 +1,7 @@
 import TYPE from "./../Types/Socket";
 
 const initialState = {
-  data: null
+  data: ""
 };
 
 export default (state = initialState, { type, payload }) => {

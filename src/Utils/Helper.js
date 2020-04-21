@@ -1,4 +1,4 @@
-export const makePacketsFromHexString = (hex, quantum = 4, offset =16) => {
+export const makePacketsFromHexString = (hex, quantum = 4, offset =16, lineHeight = 22) => {
 
   const hexStr = hex.replace(/[ \n]/g, "").toUppercase();
 
@@ -10,7 +10,7 @@ export const makePacketsFromHexString = (hex, quantum = 4, offset =16) => {
       const len = parseInt((Math.random() * 256) / quantum) * quantum;
       const str = hexStr.slice(len, len + len);
       const lines = str.match(/.{1,32}/g) || [];
-      const size = 16 + (lines.length * 22);
+      const size = 16 + (lines.length * lineHeight);
       return { len, lines, offset, quantum, size };
     });
 };

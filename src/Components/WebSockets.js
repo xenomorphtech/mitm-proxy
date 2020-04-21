@@ -30,6 +30,7 @@ const WebSockets = (props) => {
     // Unmounting the component
     // i.e. closing the connection
     return () => {
+      console.log(`Closing ${name} from Server`);
       ws.close(1000, name);
     };
   }, []);

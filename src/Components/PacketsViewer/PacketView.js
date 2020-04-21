@@ -1,44 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { isEmpty } from "lodash";
 
-import { Notes } from "@material-ui/icons";
-import { Box, Grid, Paper, Typography, IconButton } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
+
+import { setPackets } from "../../Redux/Actions/Proxy";
 
 import PacketNotes from "./../Modals/PacketNotes";
-import PacketsTable from "./../Tables/PacketsTable";
-import Virtualized from "./../Common/Virtualized";
+import PacketsList from "../Lists/PacketsList";
 
 const PacketView = (props) => {
-  const { packets } = props;
+  const { packets, packet, setPackets } = props;
 
   const [open, setOpen] = useState(false);
   const [notes, setNotes] = useState("");
 
-  const getRowHeight = ({ index }) => packets[index].size;
-
-  const rowRenderer = ({ index, key, style }) => (
-    <Box p={1} key={key} style={style} className="packet">
-      <Grid
-        container
-        direction="row"
-      >
-        {index % 2 ? <div style={{ flexGrow: 1 }}></div> : <></>}
-        <PacketsTable side={index % 2 ? "RIGHT" : "LEFT"} list={packets[index].lines} />
-      </Grid>
-    </Box>
-  );
-
-  const noOfPackets = packets.length;
+  useEffect(() => {
+    if(!isEmpty(packet)){
+      const newPackets = [...packets, packet];
+      setPackets(newPackets);
+    }
+  },[packet]);
 
   return <>
     <Paper style={{ height: window.innerHeight - 88, overflow: "scroll" }}>
-      <Virtualized
-        dataArray={packets}
-        useDynamicRowHeight={true}
-        rowRenderer={rowRenderer}
-        getRowHeight={getRowHeight}
-        overscan={10}
-        scrollToIndex={noOfPackets - 1}
-      />
+      <PacketsList packets={packets} />
     </Paper>
     <PacketNotes
       open={open}
@@ -49,4 +35,10 @@ const PacketView = (props) => {
   </>;
 };
 
-export default PacketView;
+const mapStateToProps = state => ({
+  packet: state.socket.data
+});
+
+export default connect(mapStateToProps, {
+  setPackets
+})(PacketView);

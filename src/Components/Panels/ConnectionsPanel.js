@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { isEmpty } from "lodash";
 import { connect } from "react-redux";
 
-import { Box, Button } from "@material-ui/core";
+import { Box, Button, Typography } from "@material-ui/core";
 
 import Panel from "./../Common/Panel";
 import ConnectionsTable from "./../Tables/ConnectionsTable";
 
-import { getConnections, getPackets } from "./../../Redux/Actions/Proxy";
+import { getConnections, getPackets, resetPackets } from "./../../Redux/Actions/Proxy";
 
 const ConnectionsPanel = (props) => {
   const { hexCode: { selectedHexCode } } = props;
@@ -26,7 +26,7 @@ const ConnectionsPanel = (props) => {
   const handleDisconnect = () => {
     const updatedConnections = [...connections];
     updatedConnections.forEach((connection, i) => {
-        connection.connected = false;
+      connection.connected = false;
     });
     setConnections(updatedConnections);
   }
@@ -41,28 +41,34 @@ const ConnectionsPanel = (props) => {
         connection.connected = false;
       }
     });
-    props.getPackets();
+    props.resetPackets();
     setConnections(updatedConnections);
   };
 
   return (
-    <Panel heading="Connections">
+    <Panel expanded={true} heading="Connections">
       <Box className="w-100">
-        <ConnectionsTable
-          list={connections}
-          onToggle={onToggle}
-          selectedHexCode={selectedHexCode}
-        />
-        <br/>
-        <Button 
-          className="w-100"
-          variant="contained" 
-          disabled={connections.every(({ connected }) => connected === false)}
-          onClick={handleDisconnect}
-          color="primary"
-        >
-          Disconnect
+        {connections.length ? <>
+          <ConnectionsTable
+            list={connections}
+            onToggle={onToggle}
+            selectedHexCode={selectedHexCode}
+          />
+          <br />
+          <Button
+            className="w-100"
+            variant="contained"
+            disabled={connections.every(({ connected }) => connected === false)}
+            onClick={handleDisconnect}
+            color="primary"
+          >
+            Disconnect
           </Button>
+        </> : <>
+        <Typography>
+          No Connections
+        </Typography>
+          </>}
       </Box>
     </Panel>
   );
@@ -75,5 +81,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getPackets,
+  resetPackets,
   getConnections
 })(ConnectionsPanel);

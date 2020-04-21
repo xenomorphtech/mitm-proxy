@@ -15,8 +15,6 @@ import { USER } from "./../Constants/Roles";
 import { data } from "./../__Mocks__/Data/Tree";
 import PacketView from "./../Components/PacketsViewer/PacketView";
 import TreePanel from "./../Components/Panels/TreePanel";
-import WebSockets from "../Components/WebSockets";
-import { SERVER_HREF } from "../Constants/Misc";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -60,7 +58,7 @@ const Dashboard = (props) => {
             direction="row"
             spacing={1}
           >
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={4} md={4} lg={4}>
               <ConnectionsPanel />
               <DataInspectorPanel
                 hexCode={hexCode}
@@ -71,7 +69,7 @@ const Dashboard = (props) => {
                 expandIcon={<ChevronRight />}
               />
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={8} md={8} lg={8}>
               <PacketView
                 packets={packets}
               />

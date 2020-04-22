@@ -40,17 +40,17 @@ const NavBarItems = (props) => {
 
   const makeNavBarItems = (items, isMobile) => items.map(({ onClick, badgeCount = 0, icon, label }) => {
     const button = (
-      <IconButton onClick={onClick} color="inherit">
+      <IconButton onClick={isMobile ? undefined : onClick} color="inherit">
         <Badge badgeContent={badgeCount} color="secondary">
           {icon}
         </Badge>
       </IconButton>
     );
     const view = <>
-      {isMobile ? button : <Tooltip title={label}>{button}</Tooltip>}
+      {isMobile ? button : <Tooltip title={label}>{button}</Tooltip>}&nbsp;
       {isMobile ? <p>{label}</p> : <></>}
     </>;
-    return isMobile ? <MenuItem>{view}</MenuItem> : view;
+    return isMobile ? <MenuItem onClick={onClick}>{view}</MenuItem> : view;
   });
 
   return <>

@@ -1,10 +1,11 @@
-import Faker from "faker";
+const host = process.env.REACT_APP_WSS_HOST || "";
+const port = process.env.REACT_APP_WSS_PORT || "";
 
 export const connection = (i) => ({
   connected: false,
   name: "Connection " + i,
-  ip: Faker.internet.ip(),
-  port: Math.random().toString().slice(2, 6),
+  host,
+  port,
   live: Boolean(i % 2)
 });
 

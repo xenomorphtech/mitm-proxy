@@ -21,6 +21,7 @@ const ConnectionsPanel = (props) => {
 
   const handleNewConnection = () => {
     setIndex(-1);
+    setQueries({});
     setOpen(true);
   };
 

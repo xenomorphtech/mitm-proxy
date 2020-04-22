@@ -41,7 +41,7 @@ const ConnectionsPanel = (props) => {
       connection.connected = false;
     });
     setConnections(updatedConnections);
-  }
+  };
 
   const onToggle = (name) => (event) => {
     const { target: { checked } } = event;
@@ -88,7 +88,7 @@ const ConnectionsPanel = (props) => {
 
     setConnections(newConnections);
     setQueries({});
-  }
+  };
 
   const disabled = connections.every(({ connected }) => connected === false);
 
@@ -147,6 +147,7 @@ const ConnectionsPanel = (props) => {
         setOpen={setOpen}
         index={index}
         queries={queries}
+        setQueries={setQueries}
         handleSaveConnection={handleSaveConnection}
         handleEditConnection={handleEditConnection}
       />

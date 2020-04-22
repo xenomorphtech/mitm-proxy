@@ -9,32 +9,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Modal from './../Common/Modal';
 
-const initForm = {
-  name: {
-    label: "Name",
-    name: "name",
-    value: "",
-    error: false,
-    validation: /([a-zA-Z0-9 ]{5,})/,
-    helperText: "Name must be 5 letters or more"
-  },
-  host: {
-    label: "Host",
-    name: "host",
-    value: "",
-    error: false,
-    validation: /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/,
-    helperText: "Host must be 5 letters or more"
-  },
-  port: {
-    label: "Port",
-    name: "port",
-    value: "",
-    error: false,
-    validation: /^([0-9]{4,5})$/,
-    helperText: "Port must be 4 letters or more"
-  }
-};
 
 const formOrder = ["name", "host", "port"];
 
@@ -46,11 +20,39 @@ const makeQueriesFromForm = (form) => {
 
 const ConnectionModal = (props) => {
 
-  const { open, setOpen, queries, index, handleSaveConnection, handleEditConnection } = props;
+  const initForm = {
+    name: {
+      label: "Name",
+      name: "name",
+      value: "",
+      error: false,
+      validation: /([a-zA-Z0-9 ]{5,})/,
+      helperText: "Name must be 5 letters or more"
+    },
+    host: {
+      label: "Host",
+      name: "host",
+      value: "",
+      error: false,
+      validation: /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/,
+      helperText: "Host must be 5 letters or more"
+    },
+    port: {
+      label: "Port",
+      name: "port",
+      value: "",
+      error: false,
+      validation: /^([0-9]{4,5})$/,
+      helperText: "Port must be 4 letters or more"
+    }
+  };
+
+  const { open, setOpen, queries, setQueries, index, handleSaveConnection, handleEditConnection } = props;
 
   const handleClose = () => {
     setOpen(false);
     setForm(initForm);
+    setQueries({});
   };
 
   //
@@ -82,17 +84,21 @@ const ConnectionModal = (props) => {
   const disabled = !Object.values(form).every(e => !isEmpty(e.value) && e.error === false);
 
   useEffect(() => {
-    const newForm = { ...form };
-    Object.entries(queries).forEach(([key, value]) => {
-      newForm[key].value = value;
-    });
-    setForm(newForm);
-  },[queries]);
+    if (index === -1) {
+      setForm(initForm);
+    } else {
+      const newForm = { ...form };
+      Object.entries(queries).forEach(([key, value]) => {
+        newForm[key].value = value;
+      });
+      setForm(newForm);
+    }
+  }, [queries]);
 
   const handlePrimary = () => {
     const queries = makeQueriesFromForm(form);
     handleClose();
-    if(index >= 0){
+    if (index >= 0) {
       handleEditConnection(queries, index);
     } else {
       handleSaveConnection(queries);
@@ -130,14 +136,14 @@ const ConnectionModal = (props) => {
         ))}
       </DialogContent>
       <DialogActions>
-        <Button 
+        <Button
           variant="contained"
           color="secondary"
           onClick={handleClose}
         >
           Cancel
         </Button>
-        <Button 
+        <Button
           variant="contained"
           color="primary"
           onClick={handlePrimary}

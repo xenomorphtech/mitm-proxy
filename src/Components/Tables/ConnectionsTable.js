@@ -26,7 +26,7 @@ const ConnectionsTable = (props) => {
   const classes = useStyles();
 
   const handleConnection = ({ connected, live }, i) => () => {
-    if (!live) {
+    if (live) {
       onToggle("connection-" + i)({ target: { checked: !connected } });
     }
   };
@@ -56,7 +56,7 @@ const ConnectionsTable = (props) => {
             }
             <TableRow key={name}>
               <TableCell>
-                <Badge color="primary" variant="dot" invisible={live}>
+                <Badge color="primary" variant="dot" invisible={!live}>
                   {name} &nbsp;
                 </Badge>
               </TableCell>

@@ -14,3 +14,11 @@ export const makePacketsFromHexString = (hex, quantum = 4, offset =16, lineHeigh
       return { len, lines, offset, quantum, size };
     });
 };
+
+export const makeConnectionWithQueries = ({ host, name, port}) => ({
+  connected: false,
+  live: true,
+  host, 
+  name, 
+  port
+});

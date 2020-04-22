@@ -23,3 +23,7 @@ export const getConnections = (data) => (dispatch, getState) => {
   dispatch({ type: TYPE.GET_CONNECTIONS, payload: connections });
   dispatch({ type: TYPE_PAGE.HIDE_BACKDROP, payload: { count: --getState().page.backdrop.count } });
 };
+
+export const setConnections = (data) => (dispatch) => {
+  dispatch({ type: TYPE.SET_CONNECTIONS, payload: data});
+};

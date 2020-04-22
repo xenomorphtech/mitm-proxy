@@ -9,6 +9,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Radio from "@material-ui/core/Radio";
 import Badge from "@material-ui/core/Badge";
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 import WebSockets from '../WebSockets';
 
 const useStyles = makeStyles({
@@ -18,10 +22,10 @@ const useStyles = makeStyles({
 });
 
 const ConnectionsTable = (props) => {
-  const { list, onToggle, selectedHexCode } = props;
+  const { list, onToggle, selectedHexCode, handleEditBtn, handleDeleteBtn } = props;
   const classes = useStyles();
 
-  const onClickRow = ({ connected, live }, i) => () => {
+  const handleConnection = ({ connected, live }, i) => () => {
     if (!live) {
       onToggle("connection-" + i)({ target: { checked: !connected } });
     }
@@ -29,13 +33,14 @@ const ConnectionsTable = (props) => {
 
   return (
     <TableContainer>
-      <Table className={classes.table} aria-label="connection table">
+      <Table className={classes.table} size="small" aria-label="connection table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>Host</TableCell>
             <TableCell>Port</TableCell>
             <TableCell align="right">Toggle</TableCell>
+            <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -49,19 +54,30 @@ const ConnectionsTable = (props) => {
                 port={port}
               /> : <></>
             }
-            <TableRow className={live ? "" : "pointer"} key={name} onClick={onClickRow({ connected, live }, i)}>
+            <TableRow key={name}>
               <TableCell>
                 <Badge color="primary" variant="dot" invisible={live}>
                   {name} &nbsp;
                 </Badge>
               </TableCell>
               <TableCell className="font-source-code-pro">{host}</TableCell>
-              <TableCell className="font-source-code-pro">{port}</TableCell>
+              <TableCell className="font-source-code-pro">{port || "8080"}</TableCell>
               <TableCell align="right">
                 <Radio
-                  checked={connected}
-                  name={"connection-" + i}
                   color="primary"
+                  checked={connected}
+                  onClick={handleConnection({ connected, live }, i)}
+                  name={"connection-" + i}
+                />
+              </TableCell>
+              <TableCell align="right">
+                <IconButton
+                  onClick={handleEditBtn({ name, host, port }, i)}
+                  children={<EditIcon />}
+                />
+                <IconButton
+                  onClick={handleDeleteBtn(i)}
+                  children={<DeleteIcon />}
                 />
               </TableCell>
             </TableRow>

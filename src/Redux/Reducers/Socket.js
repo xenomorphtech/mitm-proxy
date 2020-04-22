@@ -1,7 +1,7 @@
-import TYPE from "./../Types/Socket";
+import TYPE from './../Types/Socket';
 
 const initialState = {
-  data: ""
+  data: ''
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -11,7 +11,7 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, data: payload };
 
     case TYPE.RESET_SOCKET_DATA:
-        return { ...state, data: null };
+        return { ...state, data: '' };
 
     default:
       return state;

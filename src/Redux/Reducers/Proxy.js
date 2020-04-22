@@ -14,6 +14,9 @@ export default (state = initialState, { type, payload }) => {
     case TYPE.GET_CONNECTIONS:
       return { ...state, connections: payload };
 
+    case TYPE.SET_CONNECTIONS:
+      return { ...state, connections: payload };
+
     case TYPE.RESET_PACKETS:
       return { ...state, packets: [] };
 

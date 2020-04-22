@@ -8,7 +8,7 @@ const WebSockets = (props) => {
   const { setSocketData } = props;
   const { host, port, data, name } = props;
 
-  const href = `${host.replace(/^http/, "ws")}:${port}`;
+  const href = `${host.replace(/^http/, "ws")}:${port === "8080" ? "" : port}`;
 
   const [ws, setWs] = useState(new WebSocket(href));
 

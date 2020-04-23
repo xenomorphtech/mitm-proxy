@@ -1,11 +1,8 @@
 import React, { useMemo } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from 'redux-persist/lib/integration/react';
+
 import { store, persistor } from "./Redux";
 import "./App.css";
 

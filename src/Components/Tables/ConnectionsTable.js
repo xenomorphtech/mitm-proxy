@@ -1,45 +1,83 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Radio } from "@material-ui/core";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Radio from "@material-ui/core/Radio";
+import Badge from "@material-ui/core/Badge";
+import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 250,
-  },
-});
+import WebSockets from '../WebSockets';
 
 const ConnectionsTable = (props) => {
-  const { list, onToggle } = props;
-  const classes = useStyles();
+  const { list, onToggle, selectedHexCode, handleEditBtn, handleDeleteBtn } = props;
+
+  const handleConnection = ({ connected, live }, i) => () => {
+    if (live) {
+      onToggle("connection-" + i)({ target: { checked: !connected } });
+    }
+  };
 
   return (
     <TableContainer>
-      <Table className={classes.table} aria-label="connection table">
+      <Table size="small" aria-label="connection table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>IP Address</TableCell>
+            <TableCell>Host</TableCell>
             <TableCell>Port</TableCell>
             <TableCell align="right">Toggle</TableCell>
+            <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-            {list.map((connection, i) => (
-              <TableRow key={connection.name}>
-                <TableCell>{connection.name}</TableCell>
-                <TableCell className="font-source-code-pro">{connection.ip}</TableCell>
-                <TableCell className="font-source-code-pro">{connection.port}</TableCell>
-                <TableCell align="right">
-                  <Radio
-                    checked={connection.connected}
-                    onChange={onToggle("connection-"+i)}
-                    name={"connection-"+i}
-                    color="primary"
+          {list.map(({ connected, name, host, port, live }, i) => <>
+            {connected ?
+              <WebSockets
+                name={name}
+                data={selectedHexCode}
+                connected={connected}
+                host={host}
+                port={port}
+              /> : <></>
+            }
+            <TableRow key={name}>
+              <TableCell>
+                <Badge color="primary" variant="dot" invisible={!live}>
+                  {name} &nbsp;
+                </Badge>
+              </TableCell>
+              <TableCell className="font-source-code-pro">{host}</TableCell>
+              <TableCell className="font-source-code-pro">{port || "8080"}</TableCell>
+              <TableCell align="right">
+                <Radio
+                  color="primary"
+                  checked={connected}
+                  onClick={handleConnection({ connected, live }, i)}
+                  name={"connection-" + i}
+                />
+              </TableCell>
+              <TableCell align="right">
+                <Box flexDirection="row">
+                  <IconButton
+                    onClick={handleEditBtn({ name, host, port }, i)}
+                    children={<EditIcon />}
                   />
-                </TableCell>
-              </TableRow>
-            ))}
+                  <IconButton
+                    onClick={handleDeleteBtn(i)}
+                    children={<DeleteIcon />}
+                  />
+                </Box>
+              </TableCell>
+            </TableRow>
+          </>
+          )}
         </TableBody>
       </Table>
     </TableContainer>

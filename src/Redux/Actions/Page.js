@@ -1,17 +1,14 @@
 import TYPE from '../Types/Page';
+import { makeSyncAction } from "./Utils";
 
 export const showLoading = () => (dispatch, getState) => {
-  dispatch({ type: TYPE.SHOW_BACKDROP, payload: { count: ++getState().page.backdrop.count } });
+  dispatch({ type: TYPE.SHOW_BACKDROP, payload: ++getState().page.backdrop });
 };
 
 export const hideLoading = () => (dispatch, getState) => {
-  dispatch({ type: TYPE.HIDE_BACKDROP, payload: { count: --getState().page.backdrop.count } });
+  dispatch({ type: TYPE.HIDE_BACKDROP, payload: --getState().page.backdrop });
 };
 
-export const showSnackbar = (queries) => (dispatch) => {
-  dispatch({ type: TYPE.SHOW_SNACKBAR, payload: queries });
-};
+export const showSnackbar = makeSyncAction(TYPE.SHOW_SNACKBAR);
 
-export const hideSnackbar = (queries) => (dispatch) => {
-  dispatch({ type: TYPE.HIDE_SNACKBAR, payload: { ...queries, open: false } });
-};
+export const hideSnackbar = (q) => makeSyncAction(TYPE.HIDE_SNACKBAR)({ ...q, open: false });

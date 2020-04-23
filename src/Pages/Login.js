@@ -12,8 +12,6 @@ import Tabs from "./../Components/Common/Tabs";
 import LogInView from "./../Components/Partials/LogInView";
 import SignUpView from "./../Components/Partials/SignUpView";
 
-import { setUserDetails } from "./../Utils/LocalStorage";
-
 const Login = (props) => {
   const {
     history,
@@ -22,7 +20,6 @@ const Login = (props) => {
 
   useEffect(() => {
     if (!isEmpty(user)) {
-      // setUserDetails(user);
       history.push("/dashboard");
     }
   }, [user]);

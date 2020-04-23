@@ -9,8 +9,6 @@ export default (state = initialState, { type, payload }) => {
   switch (type) {
 
     case TYPE.SHOW_SNACKBAR:
-      return { ...state, snackbar: payload };
-
     case TYPE.HIDE_SNACKBAR:
       return { ...state, snackbar: payload };
 

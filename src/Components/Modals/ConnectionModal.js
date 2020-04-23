@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Modal from './../Common/Modal';
-
+import Regex from './../../Constants/Regex';
 
 const formOrder = ["name", "host", "port"];
 
@@ -26,7 +26,7 @@ const ConnectionModal = (props) => {
       name: "name",
       value: "",
       error: false,
-      validation: /([a-zA-Z0-9 ]{5,})/,
+      validation: Regex.NAME,
       helperText: "Name must be 5 letters or more"
     },
     host: {
@@ -34,7 +34,7 @@ const ConnectionModal = (props) => {
       name: "host",
       value: "",
       error: false,
-      validation: /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$/,
+      validation: Regex.URL,
       helperText: "Host must be 5 letters or more"
     },
     port: {
@@ -42,7 +42,7 @@ const ConnectionModal = (props) => {
       name: "port",
       value: "",
       error: false,
-      validation: /^([0-9]{4,5})$/,
+      validation: Regex.PORT,
       helperText: "Port must be 4 letters or more"
     }
   };

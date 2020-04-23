@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { Grid, TextField, Button, FormControlLabel, Checkbox } from "@material-ui/core";
 
 import { signUp } from "./../../Redux/Actions/Auth";
+import Regex from './../../Constants/Regex';
 
 const initForm = {
   "username": {
@@ -12,7 +13,7 @@ const initForm = {
     name: "username",
     value: "",
     error: false,
-    validation: /^([a-zA-Z0-9]{5,})$/,
+    validation: Regex.USERNAME,
     helperText: "Username must be 5 letters or more"
   },
   "password": {
@@ -20,7 +21,7 @@ const initForm = {
     name: "password",
     value: "",
     error: false,
-    validation: /^(.{8,})$/,
+    validation: Regex.PASSWORD,
     helperText: "Password must be 8 letters or more",
     type: "password"
   },
@@ -29,7 +30,7 @@ const initForm = {
     name: "confirm-password",
     value: "",
     error: false,
-    validation: /^(.{8,})$/,
+    validation: Regex.PASSWORD,
     helperText: "Password must be 8 letters or more",
     type: "password"
   }

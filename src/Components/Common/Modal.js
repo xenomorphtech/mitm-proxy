@@ -3,7 +3,7 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 
 const Modal = (props) => {
-  const { open, setOpen, children } = props;
+  const { open, setOpen, children, width = "xs" } = props;
 
   const handleClose = () => {
     setOpen(false);
@@ -11,6 +11,8 @@ const Modal = (props) => {
 
   return (
     <Dialog 
+      fullWidth={true}
+      maxWidth={width}
       open={open} 
       onClose={handleClose} 
       aria-labelledby="form-dialog-title"

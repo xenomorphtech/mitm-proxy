@@ -11,12 +11,12 @@ export const setStore = (data) => (dispatch, getState) => {
 };
 
 export const saveStore = () => async (dispatch, getState) => {
-  dispatch({ type: TYPE_PAGE.SHOW_BACKDROP, payload: { count: ++getState().page.backdrop.count } });
-  
+  dispatch({ type: TYPE_PAGE.SHOW_BACKDROP, payload: ++getState().page.backdrop });
+
   const store = { proxy: { ...getState().proxy } };
   // Save to JSON file
   saveFile(JSON.stringify(store), `SESSION_${moment().format("YYYYMMDD_hhmmss")}.json`);
 
   dispatch({ type: TYPE.SAVE_STORE, payload: {} });
-  dispatch({ type: TYPE_PAGE.HIDE_BACKDROP, payload: { count: --getState().page.backdrop.count } });
+  dispatch({ type: TYPE_PAGE.HIDE_BACKDROP, payload: --getState().page.backdrop });
 };

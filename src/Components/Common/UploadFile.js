@@ -36,7 +36,7 @@ const UploadFile = (props) => {
       type="file"
       id={SESSION_UPLOAD_NODE_ID}
       style={{ display: "none" }}
-      multiple="false"
+      multiple={false}
       onChange={handleFileChange}
     />
   );

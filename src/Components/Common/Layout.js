@@ -5,6 +5,7 @@ import { isEmpty } from "lodash";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 import Grow from "@material-ui/core/Grow";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -41,7 +42,7 @@ const Layout = (props) => {
     if (reason === "clickaway") {
       return;
     }
-    hideSnackbar({ ...snackbar, open: false });
+    hideSnackbar(snackbar);
   };
 
   useEffect(() => {
@@ -52,19 +53,21 @@ const Layout = (props) => {
 
   return (
     <div className={classes.root}>
-      {snackbar ?
-        <Snackbar
-          open={snackbar.open}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          message={snackbar.msg}
-          TransitionComponent={(props) => <Grow {...props} />}
-        /> : <></>
-      }
-      {backdrop.count ?
-        <Backdrop className={classes.backdrop} open={Boolean(backdrop.count)}>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        message={snackbar.msg}
+        TransitionComponent={(props) => <Grow {...props} />}
+      >
+        <Alert elevation={6} variant="filled" severity={snackbar.severity}>
+          {snackbar.msg}
+        </Alert>
+      </Snackbar>
+      {backdrop <= 0 ? <></> :
+        <Backdrop className={classes.backdrop} open={Boolean(backdrop)}>
           <CircularProgress color="inherit" />
-        </Backdrop> : <></>
+        </Backdrop>
       }
       {navbar ?
         <NavBar

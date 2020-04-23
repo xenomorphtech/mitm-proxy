@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,21 +8,15 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Radio from "@material-ui/core/Radio";
 import Badge from "@material-ui/core/Badge";
+import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import WebSockets from '../WebSockets';
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 250,
-  },
-});
-
 const ConnectionsTable = (props) => {
   const { list, onToggle, selectedHexCode, handleEditBtn, handleDeleteBtn } = props;
-  const classes = useStyles();
 
   const handleConnection = ({ connected, live }, i) => () => {
     if (live) {
@@ -33,7 +26,7 @@ const ConnectionsTable = (props) => {
 
   return (
     <TableContainer>
-      <Table className={classes.table} size="small" aria-label="connection table">
+      <Table size="small" aria-label="connection table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -71,14 +64,16 @@ const ConnectionsTable = (props) => {
                 />
               </TableCell>
               <TableCell align="right">
-                <IconButton
-                  onClick={handleEditBtn({ name, host, port }, i)}
-                  children={<EditIcon />}
-                />
-                <IconButton
-                  onClick={handleDeleteBtn(i)}
-                  children={<DeleteIcon />}
-                />
+                <Box flexDirection="row">
+                  <IconButton
+                    onClick={handleEditBtn({ name, host, port }, i)}
+                    children={<EditIcon />}
+                  />
+                  <IconButton
+                    onClick={handleDeleteBtn(i)}
+                    children={<DeleteIcon />}
+                  />
+                </Box>
               </TableCell>
             </TableRow>
           </>

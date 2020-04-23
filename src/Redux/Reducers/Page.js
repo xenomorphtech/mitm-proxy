@@ -1,8 +1,8 @@
 import TYPE from "./../Types/Page";
 
 const initialState = {
-  snackbar: undefined,
-  backdrop: { count: 0 }
+  snackbar: { open: false },
+  backdrop: 0
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -18,12 +18,8 @@ export default (state = initialState, { type, payload }) => {
       return { ...state, backdrop: payload };
 
     case TYPE.HIDE_BACKDROP:
-      if(payload.hasOwnProperty("count")){
-        return { ...state, backdrop: payload.count < 0 ? { count: 0 } : payload };
-      } else {
-        return { ...state, backdrop: payload };
-      }
-      break;
+      return { ...state, backdrop: payload < 0 ? 0 : payload };
+
     default:
       return state;
   }

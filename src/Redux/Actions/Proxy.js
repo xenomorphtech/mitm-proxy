@@ -1,29 +1,15 @@
 import TYPE from "./../Types/Proxy";
-import TYPE_PAGE from "./../Types/Page";
+import { makeSyncAction } from "./Utils";
 
 import { packets } from "./../../__Mocks__/Data/Packets";
 import { connections } from "./../../__Mocks__/Data/Connection";
 
-export const getPackets = (data) => (dispatch, getState) => {
-  dispatch({ type: TYPE_PAGE.SHOW_BACKDROP, payload: { count: ++getState().page.backdrop.count } });
-  dispatch({ type: TYPE.GET_PACKETS, payload: packets() });
-  dispatch({ type: TYPE_PAGE.HIDE_BACKDROP, payload: { count: --getState().page.backdrop.count } });
-};
+export const getPackets = () => makeSyncAction(TYPE.GET_PACKETS)(packets());
 
-export const resetPackets = () => (dispatch) => {
-  dispatch({ type: TYPE.RESET_PACKETS, payload: [] });
-};
+export const resetPackets = () => makeSyncAction(TYPE.RESET_PACKETS)([]);
 
-export const setPackets = (data) => (dispatch) => {
-  dispatch({ type: TYPE.SET_PACKETS, payload: data });
-};
+export const setPackets = makeSyncAction(TYPE.SET_PACKETS);
 
-export const getConnections = (data) => (dispatch, getState) => {
-  dispatch({ type: TYPE_PAGE.SHOW_BACKDROP, payload: { count: ++getState().page.backdrop.count } });
-  dispatch({ type: TYPE.GET_CONNECTIONS, payload: connections });
-  dispatch({ type: TYPE_PAGE.HIDE_BACKDROP, payload: { count: --getState().page.backdrop.count } });
-};
+export const getConnections = () => makeSyncAction(TYPE.GET_CONNECTIONS)(connections);
 
-export const setConnections = (data) => (dispatch) => {
-  dispatch({ type: TYPE.SET_CONNECTIONS, payload: data});
-};
+export const setConnections = makeSyncAction(TYPE.SET_CONNECTIONS);

@@ -25,7 +25,7 @@ NOTE : Please make sure you have yarn - [Installing yarn](https://yarnpkg.com/en
       ```
 
 ## Deployment Guide
-NOTE : Hosted using [Zeit](https://zeit.co), Continuous Deployment using it.
+NOTE : Hosted using [Vercel](https://vercel.com), Continuous Deployment using it.
 
   * features -> https://dev-netmarble.now.sh
   * development -> https://stage-netmarble.now.sh

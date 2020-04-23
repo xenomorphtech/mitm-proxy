@@ -1,5 +1,4 @@
-import TYPE from "../Types/HexCode";
+import TYPE from "./../Types/HexCode";
+import { makeSyncAction } from "./Utils";
 
-export const setHexCode = (data) => (dispatch) => {
-  dispatch({ type: TYPE.SET_HEX_CODE, payload: data });
-};
+export const setHexCode = makeSyncAction(TYPE.SET_HEX_CODE);

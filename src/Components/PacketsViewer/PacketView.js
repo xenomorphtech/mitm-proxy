@@ -1,35 +1,44 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
-import C from "../../Utils/Conversion";
-import ChunkHex from "../HexEditor/ChunkHex";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { isEmpty } from "lodash";
 
-// Todo
-// 
-// 1. AddressView, HexView, AsciiView
-// 2. Identity Packet Size and Set Height of View accordingly
+import { Paper } from "@material-ui/core";
+
+import { setPackets } from "../../Redux/Actions/Proxy";
+
+import PacketNotes from "./../Modals/PacketNotes";
+import PacketsList from "../Lists/PacketsList";
 
 const PacketView = (props) => {
-  const { hexStr } = props;
-  const lines = hexStr.match(/.{1,32}/g);
+  const { packets, packet, setPackets } = props;
 
-  console.log(hexStr, lines);
+  const [open, setOpen] = useState(false);
+  const [notes, setNotes] = useState("");
 
-  const makeAddressStr = (i) => "0x" + "0".repeat(8 - String(i * 10).length) + i * 10;
-  return (
-    <Grid className="font-source-code-pro" container direction="row">
-      <Grid item xs={12} sm={12} md={12} lg={12}>Length : {hexStr.length}</Grid>
-      {lines.map((line, i) => (
-        <>
-          <Grid item xs={2} sm={2} md={2} lg={2}>{makeAddressStr(i)}</Grid>
-          {/* <Grid item xs={8} sm={8} md={6} lg={6}>{line.toUpperCase()}</Grid> */}
-          <Grid item xs={8} sm={8} md={7} lg={6}><ChunkHex chunk={line.match(/.{1,2}/g)}/></Grid>
-          <Grid item xs={2} sm={2} md={3} lg={4}>{C.hexToAscii(line).replace(/ /g, ".")}</Grid>
-        </>
-      ))}
-      <br/>
-      <br/>
-    </Grid>
-  );
+  useEffect(() => {
+    if(!isEmpty(packet)){
+      const newPackets = [...packets, packet];
+      setPackets(newPackets);
+    }
+  },[packet]);
+
+  return <>
+    <Paper style={{ height: window.innerHeight - 88, overflow: "scroll" }}>
+      <PacketsList packets={packets} />
+    </Paper>
+    <PacketNotes
+      open={open}
+      setOpen={setOpen}
+      notes={notes}
+      setNotes={setNotes}
+    />
+  </>;
 };
 
-export default PacketView;
+const mapStateToProps = state => ({
+  packet: state.socket.data
+});
+
+export default connect(mapStateToProps, {
+  setPackets
+})(PacketView);
